@@ -1,0 +1,8 @@
+email: csantana23@gmail.com  # Replace with email found in User Info page in Argo CD.
+cluster: workshop
+namespaces:
+- dev
+- stage
+- prod
+repos:
+- demo-app-deploy
