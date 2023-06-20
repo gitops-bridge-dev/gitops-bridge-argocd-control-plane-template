@@ -14,7 +14,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/csantanapr/control-plane
+        repoURL: https://github.com/csantanapr/control-plane-eks
         targetRevision: HEAD
         path: 'clusters/{{name}}'
         directory:

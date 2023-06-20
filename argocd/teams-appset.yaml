@@ -5,7 +5,7 @@ metadata:
 spec:
   generators:
   - git:
-      repoURL: https://github.com/csantanapr/control-plane
+      repoURL: https://github.com/csantanapr/control-plane-eks
       revision: HEAD
       directories:
       - path: "teams/*"
@@ -21,7 +21,7 @@ spec:
           releaseName: '{{path.basename}}'
           valueFiles:
           - '../../{{path}}/values.yaml'
-        repoURL: 'https://github.com/csantanapr/control-plane'
+        repoURL: 'https://github.com/csantanapr/control-plane-eks'
         path: charts/team
         targetRevision: HEAD
       destination:
