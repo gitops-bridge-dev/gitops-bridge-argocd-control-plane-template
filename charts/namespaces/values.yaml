@@ -1,0 +1,4 @@
+namespaces:
+- dev
+- stage
+- prod

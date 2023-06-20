@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: '{{ .Release.Name }}-namespaces'
+spec:
+  project: default
+  source:
+    helm:
+      releaseName: '{{ .Release.Name }}'
+      valueFiles:
+      - '../../teams/{{ .Release.Name }}/values.yaml'
+    repoURL: 'https://github.com/<username>/control-plane'
+    path: charts/namespaces
+    targetRevision: HEAD
+  destination:
+    namespace: '*'
+    name: {{ .Values.cluster }}
+  syncPolicy:
+    automated: {}

@@ -1,0 +1,18 @@
+# Click the link, click EDIT AS YAML, paste the contents below.
+# https://<instance-id>.cd.akuity.cloud/applications?showFavorites=false&proj=&sync=&autoSync=&health=&namespace=&cluster=&labels=&new=%7B%22apiVersion%22%3A%22argoproj.io%2Fv1alpha1%22%2C%22kind%22%3A%22Application%22%2C%22metadata%22%3A%7B%22name%22%3A%22%22%7D%2C%22spec%22%3A%7B%22destination%22%3A%7B%22name%22%3A%22%22%2C%22namespace%22%3A%22%22%2C%22server%22%3A%22%22%7D%2C%22source%22%3A%7B%22path%22%3A%22%22%2C%22repoURL%22%3A%22%22%2C%22targetRevision%22%3A%22HEAD%22%7D%2C%22sources%22%3A%5B%5D%2C%22project%22%3A%22%22%7D%7D
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+spec:
+  destination:
+    name: 'in-cluster'
+    namespace: 'argocd'
+  project: default
+  source:
+    path: argocd/
+    repoURL: https://github.com/<username>/control-plane
+    directory:
+      recurse: true
+  syncPolicy:
+    automated: {}

@@ -1,0 +1,34 @@
+# Using {{ "}}" }} to escape the templating used by appsets.
+{{- range .Values.repos }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: '{{ $.Release.Name }}-{{ . | trimSuffix "-deploy" }}'
+spec:
+  generators:
+  - git:
+      repoURL: 'https://github.com/{{ $.Values.githubOrg | default $.Release.Name }}/{{ . }}'
+      revision: HEAD
+      directories:
+        - path: env/*
+  template:
+    metadata:
+      name: '{{ $.Release.Name }}-{{ . | trimSuffix "-deploy" }}-{{ "{{" }}path.basename{{ "}}" }}'
+      # annotations:
+      #   notifications.argoproj.io/subscribe.on-deployed.github: ""
+    spec:
+      project: '{{ $.Release.Name }}'
+      source:
+        repoURL: 'https://github.com/{{ $.Values.githubOrg | default $.Release.Name }}/{{ . }}'
+        targetRevision: 'HEAD'
+        path: '{{ "{{" }}path{{ "}}" }}'
+        ## Rendered manifests.
+        # targetRevision: '{{ "{{" }}path{{ "}}" }}'
+        # path: './'
+      destination:
+        name: '{{ $.Values.cluster }}'
+        namespace: '{{ $.Release.Name }}-{{ "{{" }}path.basename{{ "}}" }}'
+      syncPolicy:
+        automated: {}
+{{- end }}

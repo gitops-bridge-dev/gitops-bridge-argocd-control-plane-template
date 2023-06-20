@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: teams
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/<username>/control-plane
+      revision: HEAD
+      directories:
+      - path: "teams/*"
+      - path: teams/USERNAME
+        exclude: true
+  template:
+    metadata:
+      name: 'team-{{path.basename}}'
+    spec:
+      project: default
+      source:
+        helm:
+          releaseName: '{{path.basename}}'
+          valueFiles:
+          - '../../{{path}}/values.yaml'
+        repoURL: 'https://github.com/<username>/control-plane'
+        path: charts/team
+        targetRevision: HEAD
+      destination:
+        namespace: 'argocd'
+        name: 'in-cluster'
+      syncPolicy:
+        automated: {}
