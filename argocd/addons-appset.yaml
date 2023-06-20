@@ -23,7 +23,7 @@ spec:
         helm:
           valueFiles:
           - '../../clusters/{{name}}/addons-values.yaml'
-        repoURL: 'https://github.com/<username>/control-plane'
+        repoURL: 'https://github.com/csantanapr/control-plane'
         path: charts/{{addonChart}}
         targetRevision: HEAD
       destination:
