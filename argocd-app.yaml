@@ -6,7 +6,7 @@ metadata:
   name: argocd
 spec:
   destination:
-    name: 'in-cluster'
+    name: 'workshop'
     namespace: 'argocd'
   project: default
   source:
