@@ -31,7 +31,7 @@ spec:
         path: charts/{{addonChart}}
         targetRevision: HEAD
       destination:
-        namespace: 'cert-manager' # Hardcoding for now, we need this value from terraform in the cluster secret
+        namespace: '{{metadata.annotations.cert_manager_namespace}}' # Hardcoding for now, we need this value from terraform in the cluster secret
         name: '{{name}}'
       syncPolicy:
         automated: {}
