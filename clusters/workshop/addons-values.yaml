@@ -1,4 +1,4 @@
 # external-secrets: {}
 # kyverno: {}
-cert-manager:
-  installCRDs: true
+# cluster-autoscaler: {}
+# cert-manager: {}
