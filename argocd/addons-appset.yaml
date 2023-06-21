@@ -9,14 +9,23 @@ spec:
           - list:
               elements:  # from /charts/
               - addonChart: external-secrets
+                addonOrder: 0
               - addonChart: kyverno
+                addonOrder: 0
               - addonChart: cluster-autoscaler
+                addonOrder: 1
               - addonChart: aws-cloudwatch-metrics
+                addonOrder: 0
               - addonChart: cert-manager
+                addonOrder: 0
+              - addonChart: argo-cd
+                addonOrder: -1
           - clusters: {} # Automatically use all clusters defined within Argo CD
   template:
     metadata:
       name: 'addon-{{name}}-{{addonChart}}'
+      annotations:
+        argocd.argoproj.io/sync-wave: "{{addonOrder}}"
     spec:
       project: default
       source:
