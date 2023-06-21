@@ -2,3 +2,4 @@
 # kyverno: {}
 # cluster-autoscaler: {}
 # cert-manager: {}
+# aws-cloudwatch-metrics: {}

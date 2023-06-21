@@ -1,0 +1,8 @@
+apiVersion: v2
+name: aws-cloudwatch-metrics
+version: 1.0.0
+
+dependencies:
+- name: aws-cloudwatch-metrics
+  version: "0.0.9"
+  repository: https://aws.github.io/eks-charts
