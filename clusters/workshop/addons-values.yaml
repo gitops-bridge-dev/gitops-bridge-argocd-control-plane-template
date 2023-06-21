@@ -1,2 +1,4 @@
 # external-secrets: {}
 # kyverno: {}
+cert-manager:
+  installCRDs: true
