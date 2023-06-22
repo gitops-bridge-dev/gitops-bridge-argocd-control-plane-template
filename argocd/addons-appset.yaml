@@ -18,7 +18,7 @@ spec:
                 addonOrder: "0"
               - addonChart: cert-manager
                 addonOrder: "0"
-              - addonChart: argo-cd
+              - addonChart: argocd
                 addonOrder: "-1"
           - clusters: {} # Automatically use all clusters defined within Argo CD
   template:
