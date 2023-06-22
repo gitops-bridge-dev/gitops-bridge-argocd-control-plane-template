@@ -9,17 +9,10 @@ spec:
           - list:
               elements:  # from /charts/
               - addonChart: external-secrets
-                addonOrder: "0"
               - addonChart: kyverno
-                addonOrder: "0"
               - addonChart: cluster-autoscaler
-                addonOrder: "0"
               - addonChart: aws-cloudwatch-metrics
-                addonOrder: "0"
               - addonChart: cert-manager
-                addonOrder: "0"
-              - addonChart: argocd
-                addonOrder: "-1"
           - clusters: {} # Automatically use all clusters defined within Argo CD
   template:
     metadata:
@@ -30,6 +23,7 @@ spec:
       project: default
       source:
         helm:
+          releaseName: "{{addonChart}}"
           valueFiles:
           - '../../clusters/{{name}}/addons-values.yaml'
           values: |

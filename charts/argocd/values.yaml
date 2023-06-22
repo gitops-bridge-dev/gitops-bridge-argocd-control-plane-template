@@ -1,1 +1,4 @@
-# argo-cd: {}
+argo-cd:
+  server:
+    service:
+      type: LoadBalancer

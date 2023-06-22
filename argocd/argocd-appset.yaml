@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: argocd
+spec:
+  generators:
+    - matrix:
+        generators:
+          - list:
+              elements:  # from /charts/
+              - addonChart: argocd
+          - clusters: {} # Automatically use all clusters defined within Argo CD
+  template:
+    metadata:
+      name: 'addon-{{name}}-{{addonChart}}'
+      annotations:
+        argocd.argoproj.io/sync-wave: "{{addonOrder}}"
+    spec:
+      project: default
+      source:
+        helm:
+          releaseName: "argo-cd"
+          valueFiles:
+          - '../../clusters/{{name}}/addons-values.yaml'
+        repoURL: 'https://github.com/csantanapr/control-plane-eks'
+        path: charts/{{addonChart}}
+        targetRevision: HEAD
+      destination:
+        namespace: '{{addonChart}}'
+        name: '{{name}}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true  # Big CRDs.
