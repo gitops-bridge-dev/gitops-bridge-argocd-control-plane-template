@@ -13,7 +13,7 @@ spec:
               - addonChart: kyverno
                 addonOrder: "0"
               - addonChart: cluster-autoscaler
-                addonOrder: "1"
+                addonOrder: "0"
               - addonChart: aws-cloudwatch-metrics
                 addonOrder: "0"
               - addonChart: cert-manager
