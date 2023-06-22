@@ -13,7 +13,7 @@ spec:
           - clusters:
               selector:
                 matchLabels:
-                  enable_argocd: true
+                  enable_argocd: "true"
 
   template:
     metadata:
