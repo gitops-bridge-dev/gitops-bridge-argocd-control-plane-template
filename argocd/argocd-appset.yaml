@@ -14,7 +14,6 @@ spec:
               selector:
                 matchLabels:
                   enable_argocd: "true"
-
   template:
     metadata:
       name: 'addon-{{name}}-{{addonNamespace}}'

@@ -20,8 +20,6 @@ spec:
   template:
     metadata:
       name: 'addon-{{name}}-{{addonChart}}'
-      annotations:
-        argocd.argoproj.io/sync-wave: "{{addonOrder}}"
     spec:
       project: default
       source:
