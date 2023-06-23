@@ -9,7 +9,6 @@ spec:
           - list:
               elements:  # from /charts/
               - addonChart: kyverno
-                addonNamespace: kyverno
           - clusters: {} # Automatically use all clusters defined within Argo CD
   template:
     metadata:
@@ -25,7 +24,7 @@ spec:
         path: charts/{{addonChart}}
         targetRevision: HEAD
       destination:
-        namespace: '{{addonNamespace}}'
+        namespace: '{{addonChart}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}

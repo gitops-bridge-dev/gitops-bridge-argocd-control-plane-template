@@ -16,6 +16,5 @@ spec:
     directory:
       recurse: true
       exclude: "exclude/*"
-
   syncPolicy:
     automated: {}

@@ -1,34 +1,35 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: argocd
+  name: addons-test-appset
 spec:
   generators:
     - matrix:
         generators:
           - list:
               elements:  # from /charts/
-              - addonChart: argo-cd
-                addonNamespace: argocd
-          - clusters:
-              selector:
-                matchLabels:
-                  enable_argocd: "true"
+              - addonChart: test-appset
+          - clusters: {} # Automatically use all clusters defined within Argo CD
   template:
     metadata:
-      name: 'addon-{{name}}-{{addonNamespace}}'
+      name: 'addon-{{name}}-{{addonChart}}'
     spec:
       project: default
       source:
         helm:
-          releaseName: '{{addonChart}}'
+          releaseName: "{{addonChart}}"
           valueFiles:
           - '../../clusters/{{name}}/addons-values.yaml'
+          values: |
+            test-appset:
+              serviceAccount:
+                annotations:
+                  eks.amazonaws.com/role-arn: {{metadata.annotations.cluster_name}}
         repoURL: 'https://github.com/csantanapr/control-plane-eks'
         path: charts/{{addonChart}}
         targetRevision: HEAD
       destination:
-        namespace: '{{addonNamespace}}'
+        namespace: '{{addonChart}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}

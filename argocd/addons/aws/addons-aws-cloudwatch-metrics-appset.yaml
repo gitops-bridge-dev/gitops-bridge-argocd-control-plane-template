@@ -9,7 +9,6 @@ spec:
           - list:
               elements:  # from /charts/
               - addonChart: aws-cloudwatch-metrics
-                addonNamespace: amazon-cloudwatch
           - clusters: {} # Automatically use all clusters defined within Argo CD
   template:
     metadata:
@@ -32,7 +31,7 @@ spec:
         path: charts/{{addonChart}}
         targetRevision: HEAD
       destination:
-        namespace: '{{addonNamespace}}'
+        namespace: '{{metadata.annotations.aws_cloudwatch_namespace}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}
