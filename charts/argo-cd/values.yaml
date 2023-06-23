@@ -1,4 +1,6 @@
-# argo-cd:
+argo-cd:
+  dex:
+    enabled: false
 #  server:
 #    service:
 #      type: LoadBalancer
