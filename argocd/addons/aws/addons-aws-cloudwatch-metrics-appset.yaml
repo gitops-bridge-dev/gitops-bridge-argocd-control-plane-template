@@ -17,7 +17,7 @@ spec:
       project: default
       source:
         helm:
-          releaseName: "{{addonChart}}"
+          releaseName: '{{addonChart}}'
           valueFiles:
           - '../../clusters/{{name}}/addons-values.yaml'
           values: |
@@ -28,7 +28,7 @@ spec:
                 annotations:
                   eks.amazonaws.com/role-arn: {{metadata.annotations.aws_cloudwatch_metrics_iam_role_arn}}
         repoURL: 'https://github.com/csantanapr/control-plane-eks'
-        path: charts/{{addonChart}}
+        path: 'charts/{{addonChart}}'
         targetRevision: HEAD
       destination:
         namespace: '{{metadata.annotations.aws_cloudwatch_namespace}}'

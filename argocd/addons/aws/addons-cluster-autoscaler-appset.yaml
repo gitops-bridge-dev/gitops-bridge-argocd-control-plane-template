@@ -12,12 +12,12 @@ spec:
           - clusters: {} # Automatically use all clusters defined within Argo CD
   template:
     metadata:
-      name: addon-{{name}}-{{addonChart}}
+      name: 'addon-{{name}}-{{addonChart}}'
     spec:
       project: default
       source:
         helm:
-          releaseName: {{addonChart}}
+          releaseName: '{{addonChart}}'
           valueFiles:
           - '../../clusters/{{name}}/addons-values.yaml'
           values: |
@@ -33,11 +33,11 @@ spec:
                   annotations:
                     eks.amazonaws.com/role-arn: {{metadata.annotations.cluster_autoscaler_iam_role_arn}}
         repoURL: https://github.com/csantanapr/control-plane-eks
-        path: charts/{{addonChart}}
+        path: 'charts/{{addonChart}}'
         targetRevision: HEAD
       destination:
-        namespace: {{metadata.annotations.cluster_autoscaler_namespace}}
-        name: {{name}}
+        namespace: '{{metadata.annotations.cluster_autoscaler_namespace}}'
+        name: '{{name}}'
       syncPolicy:
         automated: {}
         syncOptions:
