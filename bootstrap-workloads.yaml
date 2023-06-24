@@ -3,18 +3,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bootstrap
+  name: bootstrap-workloads
   namespace: 'argocd'
 spec:
   destination:
-    name: 'in-cluster-local'
+    name: 'in-cluster'
     namespace: 'argocd'
   project: default
   source:
-    path: argocd/
+    path: bootstrap/workloads
     repoURL: https://github.com/csantanapr/control-plane-eks
     directory:
       recurse: true
-      exclude: "exclude/*"
   syncPolicy:
     automated: {}

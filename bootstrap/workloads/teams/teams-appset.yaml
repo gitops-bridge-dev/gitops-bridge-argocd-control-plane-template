@@ -26,6 +26,6 @@ spec:
         targetRevision: HEAD
       destination:
         namespace: 'argocd'
-        name: 'in-cluster-local'
+        name: 'in-cluster'
       syncPolicy:
         automated: {}
