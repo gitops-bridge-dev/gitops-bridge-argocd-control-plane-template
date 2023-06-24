@@ -11,9 +11,9 @@ spec:
               - addonChart: kyverno
               - addonChart: argo-cd
           - clusters:
-            selector:
-              matchLabels:
-                akuity.io/argo-cd-cluster-name: in-cluster
+              selector:
+                matchLabels:
+                  akuity.io/argo-cd-cluster-name: in-cluster
   template:
     metadata:
       name: 'addon-{{name}}-{{addonChart}}'
