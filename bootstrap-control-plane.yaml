@@ -9,7 +9,7 @@ spec:
     namespace: 'argocd'
   project: default
   source:
-    path: argocd/control-plane
+    path: bootstrap/control-plane
     repoURL: https://github.com/csantanapr/control-plane-eks
     directory:
       recurse: true
