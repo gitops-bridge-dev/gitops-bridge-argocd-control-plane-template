@@ -10,7 +10,7 @@ spec:
             repoURL: https://github.com/csantanapr/control-plane-eks
             revision: HEAD
             directories:
-            - path: "teams/workloads/*"
+            - path: "teams/control-plane/*"
             - path: teams/USERNAME
               exclude: true
         - clusters:
