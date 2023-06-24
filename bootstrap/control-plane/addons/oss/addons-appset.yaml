@@ -1,34 +1,34 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: argocd
+  name: addons
 spec:
   generators:
     - matrix:
         generators:
           - list:
               elements:  # from /charts/
+              - addonChart: kyverno
               - addonChart: argo-cd
-                addonNamespace: argocd
           - clusters:
-              selector:
-                matchLabels:
-                  enable_argocd: "true"
+            selector:
+              matchLabels:
+                akuity.io/argo-cd-cluster-name: in-cluster
   template:
     metadata:
-      name: 'addon-{{name}}-{{addonNamespace}}'
+      name: 'addon-{{name}}-{{addonChart}}'
     spec:
       project: default
       source:
         helm:
-          releaseName: '{{addonChart}}'
+          releaseName: "{{addonChart}}"
           valueFiles:
           - '../../clusters/{{name}}/addons-values.yaml'
         repoURL: 'https://github.com/csantanapr/control-plane-eks'
         path: charts/{{addonChart}}
         targetRevision: HEAD
       destination:
-        namespace: '{{addonNamespace}}'
+        namespace: '{{addonChart}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}

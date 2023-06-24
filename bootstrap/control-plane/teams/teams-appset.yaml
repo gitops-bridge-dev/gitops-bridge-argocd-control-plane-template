@@ -14,12 +14,9 @@ spec:
             - path: teams/USERNAME
               exclude: true
         - clusters:
-            selector:
-              matchExpressions:
-              - key: akuity.io/argo-cd-cluster-name
-                operator: NotIn
-                values:
-                  - in-cluster
+          selector:
+            matchLabels:
+              akuity.io/argo-cd-cluster-name: in-cluster
   template:
     metadata:
       name: 'team-{{path.basename}}'

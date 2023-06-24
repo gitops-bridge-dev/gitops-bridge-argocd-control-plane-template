@@ -9,7 +9,13 @@ spec:
           - list:
               elements:  # from /charts/
               - addonChart: kyverno
-          - clusters: {} # Automatically use all clusters defined within Argo CD
+          - clusters:
+              selector:
+                matchExpressions:
+                - key: akuity.io/argo-cd-cluster-name
+                  operator: NotIn
+                  values:
+                    - in-cluster
   template:
     metadata:
       name: 'addon-{{name}}-{{addonChart}}'

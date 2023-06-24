@@ -1,0 +1,8 @@
+email: gitops@example.com  # Replace with email found in User Info page in Argo CD.
+cluster: dev
+namespaces:
+- dev
+- stage
+- prod
+repos:
+- demo-app-deploy

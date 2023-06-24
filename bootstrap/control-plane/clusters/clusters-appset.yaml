@@ -5,12 +5,9 @@ metadata:
 spec:
   generators:
   - clusters:
-      selector:
-        matchExpressions:
-        - key: akuity.io/argo-cd-cluster-name
-          operator: NotIn
-          values:
-            - in-cluster
+    selector:
+      matchLabels:
+        akuity.io/argo-cd-cluster-name: in-cluster
   template:
     metadata:
       name: 'cluster-{{name}}'

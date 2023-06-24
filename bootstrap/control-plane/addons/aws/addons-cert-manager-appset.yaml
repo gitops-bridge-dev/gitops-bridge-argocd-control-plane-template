@@ -10,12 +10,9 @@ spec:
               elements:  # from /charts/
               - addonChart: cert-manager
           - clusters:
-              selector:
-                matchExpressions:
-                - key: akuity.io/argo-cd-cluster-name
-                  operator: NotIn
-                  values:
-                    - in-cluster
+            selector:
+              matchLabels:
+                akuity.io/argo-cd-cluster-name: in-cluster
   template:
     metadata:
       name: 'addon-{{name}}-{{addonChart}}'
