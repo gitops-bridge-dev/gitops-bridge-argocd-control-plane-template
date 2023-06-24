@@ -8,7 +8,7 @@ spec:
     helm:
       releaseName: '{{ .Release.Name }}'
       valueFiles:
-      - '../../teams/{{ .Release.Name }}/values.yaml'
+      - '../../teams/{{ .Values.prefix }}/{{ .Release.Name }}/values.yaml'
     repoURL: 'https://github.com/csantanapr/control-plane-eks'
     path: charts/namespaces
     targetRevision: HEAD
