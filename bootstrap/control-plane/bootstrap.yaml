@@ -13,5 +13,6 @@ spec:
     repoURL: https://github.com/csantanapr/control-plane-eks
     directory:
       recurse: true
+      exclude: bootstrap/control-plane/bootstrap.yaml
   syncPolicy:
     automated: {}
