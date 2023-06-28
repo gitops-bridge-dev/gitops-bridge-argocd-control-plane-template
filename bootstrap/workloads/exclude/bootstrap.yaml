@@ -13,6 +13,6 @@ spec:
     repoURL: https://github.com/csantanapr/gitops-control-plane
     directory:
       recurse: true
-      exclude: bootstrap.yaml
+      exclude: exclude/*
   syncPolicy:
     automated: {}

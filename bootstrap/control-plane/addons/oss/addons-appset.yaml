@@ -9,7 +9,7 @@ spec:
           - list:
               elements:  # from /charts/
               - addonChart: kyverno
-              - addonChart: argo-cd
+              # - addonChart: argo-cd # commenting out for now is not working
           - clusters:
               selector:
                 matchLabels:
