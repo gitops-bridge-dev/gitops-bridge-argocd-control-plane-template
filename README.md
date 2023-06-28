@@ -2,6 +2,8 @@
 
 Control Plane repository defines the desired state of shared infrastructure components and enables self-service onboarding process for the application developer teams.
 
+This git repository is part of the project [GitOps Bridge](https://github.com/csantanapr/gitops-bridge)
+
 Repository contains the following directories:
 
 * **bootstrap/workloads** - This bootstrap uses App of Apps to deploy Application Sets, defines what resources need to be install in all clusters that are not a control plane cluster running ArgoCD.
