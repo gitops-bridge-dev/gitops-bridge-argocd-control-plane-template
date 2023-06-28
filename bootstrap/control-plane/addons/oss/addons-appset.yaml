@@ -24,7 +24,7 @@ spec:
           releaseName: "{{addonChart}}"
           valueFiles:
           - '../../clusters/{{name}}/addons-values.yaml'
-        repoURL: 'https://github.com/csantanapr/control-plane-eks'
+        repoURL: 'https://github.com/csantanapr/gitops-control-plane'
         path: charts/{{addonChart}}
         targetRevision: HEAD
       destination:

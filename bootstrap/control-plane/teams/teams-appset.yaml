@@ -7,7 +7,7 @@ spec:
     - matrix:
         generators:
         - git:
-            repoURL: https://github.com/csantanapr/control-plane-eks
+            repoURL: https://github.com/csantanapr/gitops-control-plane
             revision: HEAD
             directories:
             - path: "teams/control-plane/*"
@@ -27,7 +27,7 @@ spec:
           releaseName: '{{path.basename}}'
           valueFiles:
           - '../../{{path}}/values.yaml'
-        repoURL: 'https://github.com/csantanapr/control-plane-eks'
+        repoURL: 'https://github.com/csantanapr/gitops-control-plane'
         path: charts/team
         targetRevision: HEAD
       destination:

@@ -9,7 +9,7 @@ spec:
       releaseName: '{{ .Release.Name }}'
       valueFiles:
       - '../../teams/{{ .Values.prefix }}/{{ .Release.Name }}/values.yaml'
-    repoURL: 'https://github.com/csantanapr/control-plane-eks'
+    repoURL: 'https://github.com/csantanapr/gitops-control-plane'
     path: charts/namespaces
     targetRevision: HEAD
   destination:

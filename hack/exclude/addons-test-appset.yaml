@@ -25,7 +25,7 @@ spec:
               serviceAccount:
                 annotations:
                   eks.amazonaws.com/role-arn: {{metadata.annotations.cluster_name}}
-        repoURL: 'https://github.com/csantanapr/control-plane-eks'
+        repoURL: 'https://github.com/csantanapr/gitops-control-plane'
         path: charts/{{addonChart}}
         targetRevision: HEAD
       destination:

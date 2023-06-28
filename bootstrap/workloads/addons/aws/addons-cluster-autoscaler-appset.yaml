@@ -38,7 +38,7 @@ spec:
                   name: {{metadata.annotations.cluster_autoscaler_sa}}
                   annotations:
                     eks.amazonaws.com/role-arn: {{metadata.annotations.cluster_autoscaler_iam_role_arn}}
-        repoURL: https://github.com/csantanapr/control-plane-eks
+        repoURL: https://github.com/csantanapr/gitops-control-plane
         path: 'charts/{{addonChart}}'
         targetRevision: HEAD
       destination:

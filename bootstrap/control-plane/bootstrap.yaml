@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     path: bootstrap/control-plane
-    repoURL: https://github.com/csantanapr/control-plane-eks
+    repoURL: https://github.com/csantanapr/gitops-control-plane
     directory:
       recurse: true
       exclude: bootstrap.yaml
