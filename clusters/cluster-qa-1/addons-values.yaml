@@ -1,0 +1,6 @@
+# external-secrets: {}
+# kyverno: {}
+# cluster-autoscaler: {}
+# cert-manager: {}
+# aws-cloudwatch-metrics: {}
+# argo-cd: {}
