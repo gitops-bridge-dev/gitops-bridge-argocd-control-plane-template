@@ -1,0 +1,8 @@
+apiVersion: v2
+name: aws-fsx-csi-driver
+version: 1.0.0
+
+dependencies:
+- name: aws-fsx-csi-driver
+  version: "1.6.1"
+  repository: https://kubernetes-sigs.github.io/aws-fsx-csi-driver

@@ -5,3 +5,4 @@
 # aws-cloudwatch-metrics: {}
 # argo-cd: {}
 # aws-efs-csi-driver: {}
+# aws-fsx-csi-driver: {}
