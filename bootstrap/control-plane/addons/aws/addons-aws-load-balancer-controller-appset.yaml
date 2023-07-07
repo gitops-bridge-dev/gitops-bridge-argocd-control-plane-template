@@ -17,13 +17,6 @@ spec:
     metadata:
       name: 'addon-{{name}}-{{addonChart}}'
     spec:
-      ignoreDifferences:
-      - kind: Secret
-        name: aws-load-balancer-tls
-        jsonPointers:
-        - /data/ca.crt
-        - /data/tls.crt
-        - /data/tls.key
       project: default
       source:
         helm:
