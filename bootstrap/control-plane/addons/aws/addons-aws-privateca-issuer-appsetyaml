@@ -11,11 +11,8 @@ spec:
               - addonChart: aws-privateca-issuer
           - clusters:
               selector:
-                matchExpressions:
-                - key: akuity.io/argo-cd-cluster-name
-                  operator: NotIn
-                  values:
-                    - in-cluster
+                matchLabels:
+                  akuity.io/argo-cd-cluster-name: in-cluster
   template:
     metadata:
       name: 'addon-{{name}}-{{addonChart}}'
