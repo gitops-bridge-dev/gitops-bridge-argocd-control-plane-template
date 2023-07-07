@@ -7,3 +7,4 @@
 # aws-efs-csi-driver: {}
 # aws-fsx-csi-driver: {}
 # aws-privateca-issuer: {}
+# external-dns: {}
