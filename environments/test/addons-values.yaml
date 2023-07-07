@@ -6,3 +6,4 @@
 # argo-cd: {}
 # aws-privateca-issuer: {}
 # external-dns: {}
+# aws-load-balancer-controller: {}
