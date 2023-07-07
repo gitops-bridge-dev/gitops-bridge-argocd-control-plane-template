@@ -1,0 +1,8 @@
+apiVersion: v2
+name: aws-privateca-issuer
+version: 1.0.0
+
+dependencies:
+- name: aws-privateca-issuer
+  version: "v1.2.5"
+  repository: https://cert-manager.github.io/aws-privateca-issuer

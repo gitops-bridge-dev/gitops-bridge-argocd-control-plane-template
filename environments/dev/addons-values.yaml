@@ -4,3 +4,4 @@
 # cert-manager: {}
 # aws-cloudwatch-metrics: {}
 # argo-cd: {}
+# aws-privateca-issuer: {}

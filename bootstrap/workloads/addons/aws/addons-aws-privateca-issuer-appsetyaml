@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: addons-aws-privateca-issuer
+spec:
+  generators:
+    - matrix:
+        generators:
+          - list:
+              elements:  # from /charts/
+              - addonChart: aws-privateca-issuer
+          - clusters:
+              selector:
+                matchExpressions:
+                - key: akuity.io/argo-cd-cluster-name
+                  operator: NotIn
+                  values:
+                    - in-cluster
+  template:
+    metadata:
+      name: 'addon-{{name}}-{{addonChart}}'
+    spec:
+      project: default
+      source:
+        helm:
+          releaseName: '{{addonChart}}'
+          valueFiles:
+          - '../../clusters/{{name}}/addons-values.yaml'
+          values: |
+            aws-privateca-issuer:
+              serviceAccount:
+                name: {{metadata.annotations.aws_privateca_issuer_service_account}}
+                annotations:
+                  eks.amazonaws.com/role-arn: {{metadata.annotations.aws_privateca_issuer_iam_role_arn}}
+        repoURL: 'https://github.com/csantanapr/gitops-control-plane'
+        path: 'charts/{{addonChart}}'
+        targetRevision: HEAD
+      destination:
+        namespace: '{{metadata.annotations.aws_privateca_issuer_namespace}}'
+        name: '{{name}}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true  # Big CRDs.
