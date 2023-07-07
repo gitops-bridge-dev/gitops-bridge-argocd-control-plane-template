@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: cp-addons-aws-efs-csi-driver
+  name: addons-aws-efs-csi-driver
 spec:
   generators:
     - matrix:
