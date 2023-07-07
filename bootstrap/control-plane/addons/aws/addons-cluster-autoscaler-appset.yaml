@@ -32,7 +32,7 @@ spec:
                 clusterName: {{metadata.annotations.cluster_name}}
               rbac:
                 serviceAccount:
-                  name: {{metadata.annotations.cluster_autoscaler_sa}}
+                  name: {{metadata.annotations.cluster_autoscaler_service_account}}
                   annotations:
                     eks.amazonaws.com/role-arn: {{metadata.annotations.cluster_autoscaler_iam_role_arn}}
         repoURL: https://github.com/csantanapr/gitops-control-plane
