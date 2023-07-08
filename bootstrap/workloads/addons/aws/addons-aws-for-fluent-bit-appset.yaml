@@ -28,6 +28,10 @@ spec:
           - '../../clusters/{{name}}/addons-values.yaml'
           values: |
             aws-for-fluent-bit:
+              cloudWatchLogs:
+                enabled: true
+                region: {{metadata.annotations.region}}
+                logGroupName: {{metadata.annotations.aws_for_fluentbit_log_group_name}}
               serviceAccount:
                 name: {{metadata.annotations.aws_for_fluentbit_service_account}}
                 annotations:
