@@ -1,0 +1,8 @@
+apiVersion: v2
+name: argo-rollouts
+version: 1.0.0
+
+dependencies:
+- name: argo-rollouts
+  version: "2.22.3"
+  repository: https://argoproj.github.io/argo-helm

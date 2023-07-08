@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: cp-addons
+  name: addons-kyverno
 spec:
   generators:
     - matrix:
@@ -9,11 +9,13 @@ spec:
           - list:
               elements:  # from /charts/
               - addonChart: kyverno
-              # - addonChart: argo-cd # commenting out for now is not working
           - clusters:
               selector:
-                matchLabels:
-                  akuity.io/argo-cd-cluster-name: in-cluster
+                matchExpressions:
+                - key: akuity.io/argo-cd-cluster-name
+                  operator: NotIn
+                  values:
+                    - in-cluster
   template:
     metadata:
       name: 'addon-{{name}}-{{addonChart}}'

@@ -1,21 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons
+  name: cp-addons-argo-rollouts
 spec:
   generators:
     - matrix:
         generators:
           - list:
               elements:  # from /charts/
-              - addonChart: kyverno
+              - addonChart: argo-rollouts
           - clusters:
               selector:
-                matchExpressions:
-                - key: akuity.io/argo-cd-cluster-name
-                  operator: NotIn
-                  values:
-                    - in-cluster
+                matchLabels:
+                  akuity.io/argo-cd-cluster-name: in-cluster
   template:
     metadata:
       name: 'addon-{{name}}-{{addonChart}}'

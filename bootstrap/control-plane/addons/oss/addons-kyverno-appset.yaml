@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cp-addons-kyverno
+spec:
+  generators:
+    - matrix:
+        generators:
+          - list:
+              elements:  # from /charts/
+              - addonChart: kyverno
+          - clusters:
+              selector:
+                matchLabels:
+                  akuity.io/argo-cd-cluster-name: in-cluster
+  template:
+    metadata:
+      name: 'addon-{{name}}-{{addonChart}}'
+    spec:
+      project: default
+      source:
+        helm:
+          releaseName: "{{addonChart}}"
+          valueFiles:
+          - '../../clusters/{{name}}/addons-values.yaml'
+        repoURL: 'https://github.com/csantanapr/gitops-control-plane'
+        path: charts/{{addonChart}}
+        targetRevision: HEAD
+      destination:
+        namespace: '{{addonChart}}'
+        name: '{{name}}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true  # Big CRDs.
