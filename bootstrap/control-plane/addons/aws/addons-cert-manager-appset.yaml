@@ -25,6 +25,7 @@ spec:
           - '../../clusters/{{name}}/addons-values.yaml'
           values: |
             cert-manager:
+              installCRDs: true
               serviceAccount:
                 name: {{metadata.annotations.cert_manager_service_account}}
                 annotations:
