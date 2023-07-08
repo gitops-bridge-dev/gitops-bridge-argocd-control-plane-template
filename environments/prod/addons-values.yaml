@@ -7,4 +7,5 @@
 # aws-privateca-issuer: {}
 # external-dns: {}
 # aws-load-balancer-controller: {}
+# aws-for-fluent-bit: {}
 
