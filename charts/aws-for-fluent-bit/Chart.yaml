@@ -1,8 +1,0 @@
-apiVersion: v2
-name: aws-for-fluent-bit
-version: 1.0.0
-
-dependencies:
-- name: aws-for-fluent-bit
-  version: "0.1.27"
-  repository: https://aws.github.io/eks-charts
