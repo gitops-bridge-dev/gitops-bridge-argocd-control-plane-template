@@ -1,8 +1,0 @@
-apiVersion: v2
-name: aws-load-balancer-controller
-version: 1.0.0
-
-dependencies:
-- name: aws-load-balancer-controller
-  version: "1.4.8"
-  repository: https://aws.github.io/eks-charts
