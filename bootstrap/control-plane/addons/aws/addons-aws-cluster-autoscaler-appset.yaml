@@ -56,9 +56,9 @@ spec:
           values: |
             image:
               tag: {{metadata.annotations.aws_cluster_autoscaler_image_tag}}
-            awsRegion: {{metadata.annotations.aws_region}}
+            awsRegion: {{metadata.annotations.region}}
             autoDiscovery:
-              clusterName: {{metadata.annotations.aws_cluster_name}}
+              clusterName: {{metadata.annotations.cluster_name}}
             rbac:
               serviceAccount:
                 name: {{metadata.annotations.aws_cluster_autoscaler_service_account}}
