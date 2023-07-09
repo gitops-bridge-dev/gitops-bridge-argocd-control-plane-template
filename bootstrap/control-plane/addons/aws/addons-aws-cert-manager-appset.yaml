@@ -4,16 +4,16 @@ metadata:
   name: addons-aws-cert-manager
 spec:
   generators:
-    - matrix:
+    - merge:
+        mergeKeys:
+          - server
         generators:
-          - list:
-              elements:
-              - addonChart: cert-manager
-                addonRepository: https://charts.jetstack.io
           - clusters:
               values:
-                # you can specify different versions, by using more narrow matchExpressions
-                addonVersion: v1.11.1
+                addonChart: cert-manager
+                # anything not staging or prod use this version
+                addonChartVersion: v1.12.2
+                addonChartRepository: https://charts.jetstack.io
               selector:
                 matchExpressions:
                 - key: akuity.io/argo-cd-cluster-name
@@ -24,23 +24,35 @@ spec:
                   operator: In
                   values:
                     - 'true'
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: staging
+              values:
+                addonChartVersion: v1.11.4
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: prod
+              values:
+                addonChartVersion: v1.11.1
   template:
     metadata:
-      name: 'addon-{{name}}-{{addonChart}}'
+      name: 'addon-{{name}}-{{values.addonChart}}'
     spec:
       project: default
       sources:
       - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
         targetRevision: HEAD
         ref: values
-      - chart: '{{addonChart}}'
-        repoURL: '{{addonRepository}}'
-        targetRevision: '{{values.addonVersion}}'
+      - chart: '{{values.addonChart}}'
+        repoURL: '{{values.addonChartRepository}}'
+        targetRevision: '{{values.addonChartVersion}}'
         helm:
-          releaseName: '{{addonChart}}'
+          releaseName: '{{values.addonChart}}'
           valueFiles:
-          - $values/environments/{{metadata.labels.environment}}/addons/{{addonChart}}/values.yaml
-          - $values/clusters/{{name}}/addons/{{addonChart}}/values.yaml
+          - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
+          - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
           values: |
             installCRDs: true
             serviceAccount:
