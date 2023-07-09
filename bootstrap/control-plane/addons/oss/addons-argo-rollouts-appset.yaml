@@ -4,12 +4,16 @@ metadata:
   name: addons-argo-rollouts
 spec:
   generators:
-    - matrix:
+    - merge:
+        mergeKeys:
+          - server
         generators:
-          - list:
-              elements:  # from /charts/
-              - addonChart: argo-rollouts
           - clusters:
+              values:
+                addonChart: argo-rollouts
+                # anything not staging or prod use this version
+                addonChartVersion: '2.22.3'
+                addonChartRepository: https://argoproj.github.io/argo-helm
               selector:
                 matchExpressions:
                 - key: akuity.io/argo-cd-cluster-name
@@ -20,19 +24,35 @@ spec:
                   operator: In
                   values:
                     - 'true'
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: staging
+              values:
+                addonChartVersion: '2.22.3'
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: prod
+              values:
+                addonChartVersion: '2.22.3'
   template:
     metadata:
-      name: 'addon-{{name}}-{{addonChart}}'
+      name: 'addon-{{name}}-{{values.addonChart}}'
     spec:
       project: default
-      source:
-        helm:
-          releaseName: "{{addonChart}}"
-          valueFiles:
-          - '../../clusters/{{name}}/addons-values.yaml'
-        repoURL: 'https://github.com/csantanapr/gitops-control-plane'
-        path: charts/{{addonChart}}
+      sources:
+      - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
         targetRevision: HEAD
+        ref: values
+      - chart: '{{values.addonChart}}'
+        repoURL: '{{values.addonChartRepository}}'
+        targetRevision: '{{values.addonChartVersion}}'
+        helm:
+          releaseName: '{{values.addonChart}}'
+          valueFiles:
+          - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
+          - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
       destination:
         namespace: '{{addonChart}}'
         name: '{{name}}'
