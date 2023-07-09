@@ -4,16 +4,16 @@ metadata:
   name: addons-kyverno
 spec:
   generators:
-    - matrix:
+    - merge:
+        mergeKeys:
+          - server
         generators:
-          - list:
-              elements:  # from /charts/
-              - addonChart: kyverno
-                addonRepository: https://kyverno.github.io/kyverno
           - clusters:
               values:
-                # you can specify different versions, by using more narrow matchExpressions
-                addonVersion: v2.3.4
+                addonChart: kyverno
+                # anything not staging or prod use this version
+                addonChartVersion: '3.0.2'
+                addonChartRepository: https://kyverno.github.io/kyverno
               selector:
                 matchExpressions:
                 - key: akuity.io/argo-cd-cluster-name
@@ -24,28 +24,40 @@ spec:
                   operator: In
                   values:
                     - 'true'
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: staging
+              values:
+                addonChartVersion: '3.0.2'
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: prod
+              values:
+                addonChartVersion: '3.0.2'
   template:
     metadata:
-      name: 'addon-{{name}}-{{addonChart}}'
+      name: 'addon-{{name}}-{{values.addonChart}}'
     spec:
       project: default
       sources:
       - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
         targetRevision: HEAD
-        path: 'clusters/{{name}}/addons/{{addonChart}}'
+        path: 'clusters/{{name}}/addons/{{values.addonChart}}'
       - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
         targetRevision: HEAD
         ref: values
-      - chart: '{{addonChart}}'
-        repoURL: '{{addonRepository}}'
-        targetRevision: '{{values.addonVersion}}'
+      - chart: '{{values.addonChart}}'
+        repoURL: '{{values.addonChartRepository}}'
+        targetRevision: '{{values.addonChartVersion}}'
         helm:
-          releaseName: '{{addonChart}}'
+          releaseName: '{{values.addonChart}}'
           valueFiles:
-          - $values/environments/{{metadata.labels.environment}}/addons/{{addonChart}}/values.yaml
-          - $values/clusters/{{name}}/addons/{{addonChart}}/values.yaml
+          - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
+          - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
       destination:
-        namespace: '{{addonChart}}'
+        namespace: '{{values.addonChart}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}

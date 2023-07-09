@@ -1,9 +1,0 @@
-argo-cd:
-  dex:
-    enabled: false
-#  server:
-#    service:
-#      type: LoadBalancer
-# Instead of LoadBalancer or Ingress access with portforward with no password
-# $ kubectl config set-context --current --namespace argocd
-# $ argocd admin dashboard
