@@ -4,12 +4,16 @@ metadata:
   name: addons-aws-velero
 spec:
   generators:
-    - matrix:
+    - merge:
+        mergeKeys:
+          - server
         generators:
-          - list:
-              elements:  # from /charts/
-              - addonChart: velero
           - clusters:
+              values:
+                addonChart: velero
+                # anything not staging or prod use this version
+                addonChartVersion: '3.1.6'
+                addonChartRepository: https://vmware-tanzu.github.io/helm-charts
               selector:
                 matchExpressions:
                 - key: akuity.io/argo-cd-cluster-name
@@ -20,43 +24,58 @@ spec:
                   operator: In
                   values:
                     - 'true'
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: staging
+              values:
+                addonChartVersion: '3.1.6'
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: prod
+              values:
+                addonChartVersion: '3.1.6'
   template:
     metadata:
-      name: 'addon-{{name}}-{{addonChart}}'
+      name: 'addon-{{name}}-{{values.addonChart}}'
     spec:
       project: default
-      source:
-        helm:
-          releaseName: '{{addonChart}}'
-          valueFiles:
-          - '../../clusters/{{name}}/addons-values.yaml'
-          values: |
-            velero:
-              configuration:
-                provider: aws
-                backupStorageLocation:
-                  prefix: {{metadata.annotations.aws_velero_backup_s3_bucket_prefix}}
-                  bucket: {{metadata.annotations.aws_velero_backup_s3_bucket_name}}
-                  region: {{metadata.annotations.region}}
-                volumeSnapshotLocation:
-                  region: {{metadata.annotations.region}}
-              credentials:
-                useSecret: false
-              serviceAccount:
-                server:
-                  name: {{metadata.annotations.aws_velero_service_account}}
-                  annotations:
-                    eks.amazonaws.com/role-arn: {{metadata.annotations.aws_velero_iam_role_arn}}
-              initContainers:
-              - name: velero-plugin-for-aws
-                image: velero/velero-plugin-for-aws:v1.7.0
-                imagePullPolicy: IfNotPresent
-                volumeMounts:
-                  - mountPath: /target
-                    name: plugins
-        repoURL: 'https://github.com/csantanapr/gitops-control-plane'
-        path: 'charts/{{addonChart}}'
+      sources:
+      - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
         targetRevision: HEAD
+        ref: values
+      - chart: '{{values.addonChart}}'
+        repoURL: '{{values.addonChartRepository}}'
+        targetRevision: '{{values.addonChartVersion}}'
+        helm:
+          releaseName: '{{values.addonChart}}'
+          valueFiles:
+          - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
+          - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
+          values: |
+            configuration:
+              provider: aws
+              backupStorageLocation:
+                prefix: {{metadata.annotations.aws_velero_backup_s3_bucket_prefix}}
+                bucket: {{metadata.annotations.aws_velero_backup_s3_bucket_name}}
+                region: {{metadata.annotations.region}}
+              volumeSnapshotLocation:
+                region: {{metadata.annotations.region}}
+            credentials:
+              useSecret: false
+            serviceAccount:
+              server:
+                name: {{metadata.annotations.aws_velero_service_account}}
+                annotations:
+                  eks.amazonaws.com/role-arn: {{metadata.annotations.aws_velero_iam_role_arn}}
+            initContainers:
+            - name: velero-plugin-for-aws
+              image: velero/velero-plugin-for-aws:v1.7.0
+              imagePullPolicy: IfNotPresent
+              volumeMounts:
+                - mountPath: /target
+                  name: plugins
       destination:
         namespace: '{{metadata.annotations.aws_velero_namespace}}'
         name: '{{name}}'
