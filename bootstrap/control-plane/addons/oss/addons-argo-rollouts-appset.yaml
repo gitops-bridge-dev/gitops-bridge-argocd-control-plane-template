@@ -54,7 +54,7 @@ spec:
           - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
           - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
       destination:
-        namespace: '{{addonChart}}'
+        namespace: '{{values.addonChart}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}
