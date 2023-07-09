@@ -37,7 +37,7 @@ spec:
         path: 'charts/{{addonChart}}'
         targetRevision: HEAD
       destination:
-        namespace: '{{metadata.annotations.aws_cloudwatch_namespace}}'
+        namespace: '{{metadata.annotations.aws_cloudwatch_metrics_namespace}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}
