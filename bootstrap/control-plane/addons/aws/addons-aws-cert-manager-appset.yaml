@@ -7,9 +7,13 @@ spec:
     - matrix:
         generators:
           - list:
-              elements:  # from /charts/
+              elements:
               - addonChart: cert-manager
+                addonRepository: https://charts.jetstack.io
           - clusters:
+              values:
+                # you can specify different versions, by using more narrow matchExpressions
+                addonVersion: v1.11.1
               selector:
                 matchExpressions:
                 - key: akuity.io/argo-cd-cluster-name
@@ -25,21 +29,24 @@ spec:
       name: 'addon-{{name}}-{{addonChart}}'
     spec:
       project: default
-      source:
-        helm:
+      sources:
+      - helm:
           releaseName: '{{addonChart}}'
           valueFiles:
-          - '../../clusters/{{name}}/addons-values.yaml'
+          - $values/environments/{{metadata.labels.environment}}/{{addonChart}}/values.yaml
+          - $values/clusters/{{name}}/{{addonChart}}/addons-values.yaml
           values: |
-            cert-manager:
-              installCRDs: true
-              serviceAccount:
-                name: {{metadata.annotations.aws_cert_manager_service_account}}
-                annotations:
-                  eks.amazonaws.com/role-arn: {{metadata.annotations.aws_cert_manager_iam_role_arn}}
-        repoURL: https://github.com/csantanapr/gitops-control-plane
-        path: 'charts/{{addonChart}}'
+            installCRDs: true
+            serviceAccount:
+              name: {{metadata.annotations.aws_cert_manager_service_account}}
+              annotations:
+                eks.amazonaws.com/role-arn: {{metadata.annotations.aws_cert_manager_iam_role_arn}}
+        chart: '{{addonChart}}'
+        repoURL: '{{addonRepository}}'
+        targetRevision: '{{values.addonVersion}}'
+      - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
         targetRevision: HEAD
+        ref: values
       destination:
         namespace: '{{metadata.annotations.aws_cert_manager_namespace}}'
         name: '{{name}}'
