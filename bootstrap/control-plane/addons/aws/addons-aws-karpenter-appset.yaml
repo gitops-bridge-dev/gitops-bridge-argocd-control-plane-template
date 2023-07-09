@@ -13,7 +13,7 @@ spec:
                 addonChart: karpenter
                 # anything not staging or prod use this version
                 addonChartVersion: 'v0.27.2'
-                addonChartRepository: oci://public.ecr.aws/karpenter
+                addonChartRepository: oci://public.ecr.aws
               selector:
                 matchExpressions:
                 - key: akuity.io/argo-cd-cluster-name
@@ -45,7 +45,7 @@ spec:
       - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
         targetRevision: HEAD
         ref: values
-      - chart: '{{values.addonChart}}'
+      - chart: '{{values.addonChart}}/karpenter'
         repoURL: '{{values.addonChartRepository}}'
         targetRevision: '{{values.addonChartVersion}}'
         helm:
