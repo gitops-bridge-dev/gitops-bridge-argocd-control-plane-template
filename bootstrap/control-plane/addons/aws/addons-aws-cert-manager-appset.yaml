@@ -34,7 +34,7 @@ spec:
           releaseName: '{{addonChart}}'
           valueFiles:
           - $values/environments/{{metadata.labels.environment}}/{{addonChart}}/values.yaml
-          - $values/clusters/{{name}}/{{addonChart}}/addons-values.yaml
+          - $values/clusters/{{name}}/{{addonChart}}/values.yaml
           values: |
             installCRDs: true
             serviceAccount:
