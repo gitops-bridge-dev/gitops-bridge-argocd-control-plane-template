@@ -1,0 +1,4 @@
+
+resources:
+  - ../../../environments/control-plane/storage
+  - storage-classes.yaml
