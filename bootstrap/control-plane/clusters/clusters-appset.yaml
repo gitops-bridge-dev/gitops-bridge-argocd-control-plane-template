@@ -22,6 +22,7 @@ spec:
         path: 'clusters/{{name}}'
         directory:
           recurse: true
+          exclude: exclude/addons/*
       destination:
         name: '{{name}}'
         namespace: '*'
