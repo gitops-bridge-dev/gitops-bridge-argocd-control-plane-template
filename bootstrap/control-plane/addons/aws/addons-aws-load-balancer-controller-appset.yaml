@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: cp-addons-aws-load-balancer-controller
+  name: addons-aws-load-balancer-controller
 spec:
   generators:
     - matrix:
@@ -11,8 +11,15 @@ spec:
               - addonChart: aws-load-balancer-controller
           - clusters:
               selector:
-                matchLabels:
-                  akuity.io/argo-cd-cluster-name: in-cluster
+                matchExpressions:
+                - key: akuity.io/argo-cd-cluster-name
+                  operator: NotIn
+                  values:
+                    - in-cluster
+                - key: aws_enable_aws_load_balancer_controller
+                  operator: In
+                  values:
+                    - 'true'
   template:
     metadata:
       name: 'addon-{{name}}-{{addonChart}}'

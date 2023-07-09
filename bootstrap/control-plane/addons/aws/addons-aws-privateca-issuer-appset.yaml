@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: cp-addons-aws-privateca-issuer
+  name: addons-aws-privateca-issuer
 spec:
   generators:
     - matrix:
@@ -11,8 +11,15 @@ spec:
               - addonChart: aws-privateca-issuer
           - clusters:
               selector:
-                matchLabels:
-                  akuity.io/argo-cd-cluster-name: in-cluster
+                matchExpressions:
+                - key: akuity.io/argo-cd-cluster-name
+                  operator: NotIn
+                  values:
+                    - in-cluster
+                - key: aws_enable_aws_privateca_issuer
+                  operator: In
+                  values:
+                    - 'true'
   template:
     metadata:
       name: 'addon-{{name}}-{{addonChart}}'

@@ -1,13 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: cp-clusters
+  name: clusters
 spec:
   generators:
   - clusters:
       selector:
-        matchLabels:
-          akuity.io/argo-cd-cluster-name: in-cluster
+        matchExpressions:
+        - key: akuity.io/argo-cd-cluster-name
+          operator: NotIn
+          values:
+            - in-cluster
   template:
     metadata:
       name: 'cluster-{{name}}'
