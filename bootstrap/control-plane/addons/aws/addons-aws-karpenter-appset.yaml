@@ -4,12 +4,16 @@ metadata:
   name: addons-aws-karpenter
 spec:
   generators:
-    - matrix:
+    - merge:
+        mergeKeys:
+          - server
         generators:
-          - list:
-              elements:  # from /charts/
-              - addonChart: karpenter
           - clusters:
+              values:
+                addonChart: karpenter
+                # anything not staging or prod use this version
+                addonChartVersion: 'v0.27.2'
+                addonChartRepository: oci://public.ecr.aws/karpenter
               selector:
                 matchExpressions:
                 - key: akuity.io/argo-cd-cluster-name
@@ -20,31 +24,46 @@ spec:
                   operator: In
                   values:
                     - 'true'
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: staging
+              values:
+                addonChartVersion: 'v0.27.2'
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: prod
+              values:
+                addonChartVersion: 'v0.27.2'
   template:
     metadata:
-      name: 'addon-{{name}}-{{addonChart}}'
+      name: 'addon-{{name}}-{{values.addonChart}}'
     spec:
       project: default
-      source:
-        helm:
-          releaseName: '{{addonChart}}'
-          valueFiles:
-          - '../../clusters/{{name}}/addons-values.yaml'
-          values: |
-            karpenter:
-              settings:
-                aws:
-                  clusterName: {{metadata.annotations.cluster_name}}
-                  clusterEndpoint: {{metadata.annotations.aws_karpenter_cluster_endpoint}}
-                  defaultInstanceProfile: {{metadata.annotations.aws_karpenter_node_instance_profile_name}}
-                  interruptionQueueName: {{metadata.annotations.aws_karpenter_sqs_queue_name}}
-              serviceAccount:
-                name: {{metadata.annotations.aws_karpenter_service_account}}
-                annotations:
-                  eks.amazonaws.com/role-arn: {{metadata.annotations.aws_karpenter_iam_role_arn}}
-        repoURL: 'https://github.com/csantanapr/gitops-control-plane'
-        path: 'charts/{{addonChart}}'
+      sources:
+      - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
         targetRevision: HEAD
+        ref: values
+      - chart: '{{values.addonChart}}'
+        repoURL: '{{values.addonChartRepository}}'
+        targetRevision: '{{values.addonChartVersion}}'
+        helm:
+          releaseName: '{{values.addonChart}}'
+          valueFiles:
+          - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
+          - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
+          values: |
+            settings:
+              aws:
+                clusterName: {{metadata.annotations.cluster_name}}
+                clusterEndpoint: {{metadata.annotations.aws_karpenter_cluster_endpoint}}
+                defaultInstanceProfile: {{metadata.annotations.aws_karpenter_node_instance_profile_name}}
+                interruptionQueueName: {{metadata.annotations.aws_karpenter_sqs_queue_name}}
+            serviceAccount:
+              name: {{metadata.annotations.aws_karpenter_service_account}}
+              annotations:
+                eks.amazonaws.com/role-arn: {{metadata.annotations.aws_karpenter_iam_role_arn}}
       destination:
         namespace: '{{metadata.annotations.aws_karpenter_namespace}}'
         name: '{{name}}'
