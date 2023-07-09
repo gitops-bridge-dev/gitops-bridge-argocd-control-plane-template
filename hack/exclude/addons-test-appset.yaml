@@ -19,7 +19,8 @@ spec:
         helm:
           releaseName: "{{addonChart}}"
           valueFiles:
-          - '../../clusters/{{name}}/addons-values.yaml'
+          - ../../environments/{{metadata.labels.environment}}/addons/{{addonChart}}/values.yaml
+          - ../../clusters/{{name}}/addons/{{addonChart}}/values.yaml
           values: |
             test-appset:
               serviceAccount:

@@ -30,23 +30,23 @@ spec:
     spec:
       project: default
       sources:
-      - helm:
+      - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
+        targetRevision: HEAD
+        ref: values
+      - chart: '{{addonChart}}'
+        repoURL: '{{addonRepository}}'
+        targetRevision: '{{values.addonVersion}}'
+        helm:
           releaseName: '{{addonChart}}'
           valueFiles:
-          - $values/environments/{{metadata.labels.environment}}/{{addonChart}}/values.yaml
-          - $values/clusters/{{name}}/{{addonChart}}/values.yaml
+          - $values/environments/{{metadata.labels.environment}}/addons/{{addonChart}}/values.yaml
+          - $values/clusters/{{name}}/addons/{{addonChart}}/values.yaml
           values: |
             installCRDs: true
             serviceAccount:
               name: {{metadata.annotations.aws_cert_manager_service_account}}
               annotations:
                 eks.amazonaws.com/role-arn: {{metadata.annotations.aws_cert_manager_iam_role_arn}}
-        chart: '{{addonChart}}'
-        repoURL: '{{addonRepository}}'
-        targetRevision: '{{values.addonVersion}}'
-      - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
-        targetRevision: HEAD
-        ref: values
       destination:
         namespace: '{{metadata.annotations.aws_cert_manager_namespace}}'
         name: '{{name}}'

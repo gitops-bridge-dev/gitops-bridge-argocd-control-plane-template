@@ -9,7 +9,11 @@ spec:
           - list:
               elements:  # from /charts/
               - addonChart: kyverno
+                addonRepository: https://kyverno.github.io/kyverno
           - clusters:
+              values:
+                # you can specify different versions, by using more narrow matchExpressions
+                addonVersion: v2.3.4
               selector:
                 matchExpressions:
                 - key: akuity.io/argo-cd-cluster-name
@@ -25,14 +29,21 @@ spec:
       name: 'addon-{{name}}-{{addonChart}}'
     spec:
       project: default
-      source:
-        helm:
-          releaseName: "{{addonChart}}"
-          valueFiles:
-          - '../../clusters/{{name}}/addons-values.yaml'
-        repoURL: 'https://github.com/csantanapr/gitops-control-plane'
-        path: charts/{{addonChart}}
+      sources:
+      - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
         targetRevision: HEAD
+        path: 'clusters/{{name}}/addons/{{addonChart}}'
+      - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
+        targetRevision: HEAD
+        ref: values
+      - chart: '{{addonChart}}'
+        repoURL: '{{addonRepository}}'
+        targetRevision: '{{values.addonVersion}}'
+        helm:
+          releaseName: '{{addonChart}}'
+          valueFiles:
+          - $values/environments/{{metadata.labels.environment}}/addons/{{addonChart}}/values.yaml
+          - $values/clusters/{{name}}/addons/{{addonChart}}/values.yaml
       destination:
         namespace: '{{addonChart}}'
         name: '{{name}}'
