@@ -20,7 +20,7 @@ spec:
                   operator: NotIn
                   values:
                     - in-cluster
-                - key: aws_enable_cert_manager
+                - key: aws_enable_aws_cloudwatch_metrics
                   operator: In
                   values:
                     - 'true'
