@@ -13,7 +13,7 @@ spec:
                 addonChart: karpenter
                 # anything not staging or prod use this version
                 addonChartVersion: 'v0.27.2'
-                addonChartRepository: oci://public.ecr.aws
+                addonChartRepository: public.ecr.aws
               selector:
                 matchExpressions:
                 - key: akuity.io/argo-cd-cluster-name
