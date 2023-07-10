@@ -1,0 +1,4 @@
+
+resources:
+  - ../../../environments/control-plane/argocd
+  - default-project.yaml
