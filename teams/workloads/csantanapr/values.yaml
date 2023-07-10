@@ -1,5 +1,5 @@
 email: gitops@example.com  # Replace with email found in User Info page in Argo CD.
-cluster: in-cluster
+cluster: cluster-1-dev
 prefix: workloads
 namespaces:
 - dev
