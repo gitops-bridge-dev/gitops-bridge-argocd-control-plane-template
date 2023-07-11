@@ -44,9 +44,6 @@ spec:
       sources:
       - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
         targetRevision: HEAD
-        path: 'clusters/{{name}}/addons/{{values.addonChart}}'
-      - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
-        targetRevision: HEAD
         ref: values
       - chart: '{{values.addonChart}}'
         repoURL: '{{values.addonChartRepository}}'
@@ -58,6 +55,22 @@ spec:
           - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
           - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
           - $values/charts/addons/{{values.addonChart}}/values.yaml
+          #values:
+          #fileParameters:
+          #  - name:
+          #    path:
+          #parameters
+          #values
+          #valuesObject
+      - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
+        targetRevision: HEAD
+        path: charts/addons/{{values.addonChart}}/resources
+        helm:
+          ignoreMissingValueFiles: true
+          valueFiles:
+          - ../../../../environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/resources/values.yaml
+          - ../../../../clusters/{{name}}/addons/{{values.addonChart}}/resources/values.yaml
+          - ../../../../charts/addons/{{values.addonChart}}/resources/values.yaml
           #values:
           #fileParameters:
           #  - name:
