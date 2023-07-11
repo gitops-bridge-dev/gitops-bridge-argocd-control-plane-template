@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: addons-argo-workflows
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
     - merge:
         mergeKeys:

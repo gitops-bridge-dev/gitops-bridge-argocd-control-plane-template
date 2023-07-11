@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: addons-aws-ebs-csi-resources
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
     - clusters:
         values:

@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: addons-aws-privateca-issuer
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
     - merge:
         mergeKeys:

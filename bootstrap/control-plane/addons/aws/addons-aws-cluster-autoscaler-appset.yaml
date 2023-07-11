@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: addons-aws-cluster-autoscaler
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
     - merge:
         mergeKeys:

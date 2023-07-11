@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: addons-metrics-server
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
     - merge:
         mergeKeys:

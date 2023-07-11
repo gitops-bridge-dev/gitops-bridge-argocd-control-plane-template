@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: addons-aws-for-fluent-bit
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
     - merge:
         mergeKeys:

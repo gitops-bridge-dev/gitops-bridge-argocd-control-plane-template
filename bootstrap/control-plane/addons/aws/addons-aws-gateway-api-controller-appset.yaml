@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: addons-aws-gateway-api-controller
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
     - merge:
         mergeKeys:

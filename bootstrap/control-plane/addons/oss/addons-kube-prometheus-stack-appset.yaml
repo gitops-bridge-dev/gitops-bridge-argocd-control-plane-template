@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: addons-kube-prometheus-stack
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
     - merge:
         mergeKeys:

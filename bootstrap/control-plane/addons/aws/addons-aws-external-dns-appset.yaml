@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: addons-aws-external-dns
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
     - merge:
         mergeKeys:

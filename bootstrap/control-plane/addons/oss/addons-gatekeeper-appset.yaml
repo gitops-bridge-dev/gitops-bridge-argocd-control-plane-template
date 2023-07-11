@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: addons-gatekeeper
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
     - merge:
         mergeKeys:

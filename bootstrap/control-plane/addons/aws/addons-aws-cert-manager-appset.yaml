@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: addons-aws-cert-manager
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
     - merge:
         mergeKeys:

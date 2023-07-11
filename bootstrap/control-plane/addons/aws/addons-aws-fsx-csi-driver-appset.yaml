@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: addons-aws-fsx-csi-driver
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
     - merge:
         mergeKeys:
