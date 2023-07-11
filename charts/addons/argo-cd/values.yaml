@@ -5,3 +5,30 @@ configs:
       type: helm
       url: public.ecr.aws
       enableOCI: "true"
+# -- Array of extra K8s manifests to deploy
+## Note: Supports use of custom Helm templates
+##       It gets handle in this form inside the argo-cd chart
+# {{ range .Values.extraObjects }}
+# ---
+# {{ if typeIs "string" . }}
+#     {{- tpl . $ }}
+# {{- else }}
+#     {{- tpl (toYaml .) $ }}
+# {{- end }}
+# {{ end }}
+extraObjects:
+- |
+  apiVersion: argoproj.io/v1alpha1
+  kind: AppProject
+  metadata:
+    name: default
+    namespace: {{ $.Release.Namespace | quote }}
+    annotations:
+      source: gitops-brige
+  spec:
+    sourceRepos:
+      - '*'
+    destinations:
+      - namespace: '*'
+        name: '*'
+        server: '*'
