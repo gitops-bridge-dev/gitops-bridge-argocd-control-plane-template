@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: aws-ebs-csi-resources
+  name: addons-aws-ebs-csi-resources
 spec:
   generators:
     - clusters:
