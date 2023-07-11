@@ -1,6 +1,7 @@
 confgis:
   repositories:
-    name: aws-public-ecr
-    type: helm
-    url: public.ecr.aws
-    enableOCI: true
+    aws-public-ecr:
+      name: aws-public-ecr
+      type: helm
+      url: public.ecr.aws
+      enableOCI: true
