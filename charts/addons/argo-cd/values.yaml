@@ -1,5 +1,6 @@
 configs:
   repositories:
+    # Required when using helm repository with oci formal like karpenter and aws-gateway-api-controller
     aws-public-ecr:
       name: aws-public-ecr
       type: helm
