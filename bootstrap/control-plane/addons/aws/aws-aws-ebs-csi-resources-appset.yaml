@@ -1,0 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: aws-ebs-csi-resources
+spec:
+  generators:
+    - clusters:
+        values:
+          addonChart: aws-ebs-csi
+        selector:
+          matchExpressions:
+          - key: akuity.io/argo-cd-cluster-name
+            operator: NotIn
+            values:
+              - in-cluster
+          - key: aws_enable_ebs_csi_resources
+            operator: In
+            values:
+              - 'true'
+  template:
+    metadata:
+      name: 'addon-{{name}}-{{values.addonChart}}-resources'
+    spec:
+      project: default
+      source:
+        repoURL: 'https://github.com/csantanapr/gitops-control-plane'
+        targetRevision: HEAD
+        path: charts/addons/{{values.addonChart}}/resources
+        helm:
+          ignoreMissingValueFiles: true
+          valueFiles:
+          - ../../../../environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/resources/values.yaml
+          - ../../../../clusters/{{name}}/addons/{{values.addonChart}}/resources/values.yaml
+          - ../../../../charts/addons/{{values.addonChart}}/resources/values.yaml
+          #values:
+          #fileParameters:
+          #  - name:
+          #    path:
+          #parameters
+          #values
+          #valuesObject
+      destination:
+        #namespace: '{{values.addonChart}}'
+        name: '{{name}}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true  # Big CRDs.
