@@ -54,7 +54,9 @@ spec:
         targetRevision: '{{values.addonChartVersion}}'
         helm:
           releaseName: '{{values.addonChartReleaseName}}'
+          ignoreMissingValueFiles: true
           valueFiles:
+          - $values/charts/addons/{{values.addonChart}}/values.yaml
           - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChartReleaseName}}/values.yaml
           - $values/clusters/{{name}}/addons/{{values.addonChartReleaseName}}/values.yaml
           values: |
