@@ -54,7 +54,7 @@ spec:
           - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
           - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
           values: |
-            awsRegion: {{metadata.annotations.region}}
+            awsRegion: {{metadata.annotations.aws_region}}
             queueURL: {{metadata.annotations.aws_node_termination_handler_sqs_queue_url}}
             enableSqsTerminationDraining: true
             serviceAccount:

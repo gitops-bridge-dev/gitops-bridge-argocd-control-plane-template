@@ -59,9 +59,9 @@ spec:
               backupStorageLocation:
                 prefix: {{metadata.annotations.aws_velero_backup_s3_bucket_prefix}}
                 bucket: {{metadata.annotations.aws_velero_backup_s3_bucket_name}}
-                region: {{metadata.annotations.region}}
+                region: {{metadata.annotations.aws_region}}
               volumeSnapshotLocation:
-                region: {{metadata.annotations.region}}
+                region: {{metadata.annotations.aws_region}}
             credentials:
               useSecret: false
             serviceAccount:
