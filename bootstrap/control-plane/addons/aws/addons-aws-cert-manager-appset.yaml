@@ -50,7 +50,9 @@ spec:
         targetRevision: '{{values.addonChartVersion}}'
         helm:
           releaseName: '{{values.addonChart}}'
+          ignoreMissingValueFiles: true
           valueFiles:
+          - $values/charts/addons/{{values.addonChart}}/values.yaml
           - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
           - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
           values: |
@@ -59,6 +61,12 @@ spec:
               name: {{metadata.annotations.aws_cert_manager_service_account}}
               annotations:
                 eks.amazonaws.com/role-arn: {{metadata.annotations.aws_cert_manager_iam_role_arn}}
+          #fileParameters:
+          #  - name:
+          #    path:
+          #parameters
+          #values
+          #valuesObject
       destination:
         namespace: '{{metadata.annotations.aws_cert_manager_namespace}}'
         name: '{{name}}'
