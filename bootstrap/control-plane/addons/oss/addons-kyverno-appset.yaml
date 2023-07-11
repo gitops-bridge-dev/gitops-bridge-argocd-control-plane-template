@@ -62,7 +62,6 @@ spec:
           #  - name:
           #    path:
           #parameters
-          #values
           #valuesObject
       - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
         targetRevision: HEAD

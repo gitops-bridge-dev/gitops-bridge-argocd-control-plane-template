@@ -30,6 +30,8 @@ spec:
           releaseName: '{{path.basename}}'
           valueFiles:
           - '../../{{path}}/values.yaml'
+          values: |
+            cluster: '{{name}}'
         repoURL: 'https://github.com/csantanapr/gitops-control-plane'
         path: charts/team
         targetRevision: HEAD
