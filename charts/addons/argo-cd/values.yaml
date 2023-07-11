@@ -1,4 +1,4 @@
-confgis:
+configs:
   repositories:
     aws-public-ecr:
       name: aws-public-ecr
