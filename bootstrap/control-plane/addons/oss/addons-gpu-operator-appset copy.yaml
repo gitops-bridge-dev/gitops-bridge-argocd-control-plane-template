@@ -42,6 +42,12 @@ spec:
     metadata:
       name: 'addon-{{name}}-{{values.addonChart}}'
     spec:
+      ignoreDifferences:
+      - group: apps
+        kind: DaemonSet
+        name: gpu-operator-node-feature-discovery-worker
+        jsonPointers:
+          - /metadata/annotations
       project: default
       sources:
       - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
