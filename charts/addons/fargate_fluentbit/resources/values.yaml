@@ -1,0 +1,32 @@
+enabled: true
+
+parser: |
+  [PARSER]
+    Name regex
+    Format regex
+    Regex ^(?<time>[^ ]+) (?<stream>[^ ]+) (?<logtag>[^ ]+) (?<message>.+)$
+    Time_Key time
+    Time_Format %Y-%m-%dT%H:%M:%S.%L%z
+    Time_Keep On
+    Decode_Field_As json message
+
+filters: |
+  [FILTER]
+    Name parser
+    Match *
+    Key_Name log
+    Parser regex
+    Preserve_Key True
+    Reserve_Data True
+
+output: |
+  [OUTPUT]
+    Name cloudwatch_logs
+    Match *
+    region ${local.region}
+    log_group_name ${try(var.fargate_fluentbit.cwlog_group, aws_cloudwatch_log_group.fargate_fluentbit[0].name)}
+    log_stream_prefix ${try(var.fargate_fluentbit.cwlog_stream_prefix, "fargate-logs-")}
+    auto_create_group true
+
+flb_log_cw: false
+
