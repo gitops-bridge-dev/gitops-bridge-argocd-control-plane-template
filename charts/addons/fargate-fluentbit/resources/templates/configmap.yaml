@@ -17,7 +17,7 @@ data:
   filters.conf: |
 {{ .Values.filters | indent 4 }}
   output.conf: |
-{{ .Values.output | indent 4 }}
+{{ tpl .Values.output $ | indent 4 }}
   flb_log_cw: {{ .Values.flb_log_cw | quote }}
 
 {{- end }}

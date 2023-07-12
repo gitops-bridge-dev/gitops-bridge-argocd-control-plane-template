@@ -23,10 +23,15 @@ output: |
   [OUTPUT]
     Name cloudwatch_logs
     Match *
-    region ${local.region}
-    log_group_name ${try(var.fargate_fluentbit.cwlog_group, aws_cloudwatch_log_group.fargate_fluentbit[0].name)}
-    log_stream_prefix ${try(var.fargate_fluentbit.cwlog_stream_prefix, "fargate-logs-")}
+    region {{ .Values.region }}
+    log_group_name {{ .Values.log_group_name }}
+    log_stream_prefix {{ .Values.log_stream_prefix }}
     auto_create_group true
 
 flb_log_cw: "false"
 
+log_group_name: "replace_with_valid_log_group"
+
+log_stream_prefix: "fargate-logs-"
+
+region: "us-east-1"
