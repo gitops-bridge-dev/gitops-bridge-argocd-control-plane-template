@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-aws-fargate_fluentbit
+  name: addons-aws-fargate-fluentbit
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
   generators:
     - clusters:
         values:
-          addonChart: fargate_fluentbit
+          addonChart: fargate-fluentbit
         selector:
           matchExpressions:
           - key: akuity.io/argo-cd-cluster-name
