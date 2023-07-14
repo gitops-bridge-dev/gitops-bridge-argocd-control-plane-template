@@ -60,17 +60,17 @@ spec:
           values: |
             cloudWatchLogs:
               enabled: true
-              region: {{metadata.annotations.aws_region}}
-              logGroupName: {{metadata.annotations.aws_for_fluentbit_log_group_name}}
-              logGroupTemplate: {{metadata.annotations.aws_for_fluentbit_log_group_name}}/workload/$kubernetes['namespace_name']
+              region: {{metadata.annotations.metadata_aws_region}}
+              logGroupName: {{metadata.annotations.metadata_aws_for_fluentbit_log_group_name}}
+              logGroupTemplate: {{metadata.annotations.metadata_aws_for_fluentbit_log_group_name}}/workload/$kubernetes['namespace_name']
               logStreamTemplate: $kubernetes['pod_name'].$kubernetes['container_name']
               logRetentionDays: 90
             serviceAccount:
-              name: {{metadata.annotations.aws_for_fluentbit_service_account}}
+              name: {{metadata.annotations.metadata_aws_for_fluentbit_service_account}}
               annotations:
-                eks.amazonaws.com/role-arn: {{metadata.annotations.aws_for_fluentbit_iam_role_arn}}
+                eks.amazonaws.com/role-arn: {{metadata.annotations.metadata_aws_for_fluentbit_iam_role_arn}}
       destination:
-        namespace: '{{metadata.annotations.aws_for_fluentbit_namespace}}'
+        namespace: '{{metadata.annotations.metadata_aws_for_fluentbit_namespace}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}

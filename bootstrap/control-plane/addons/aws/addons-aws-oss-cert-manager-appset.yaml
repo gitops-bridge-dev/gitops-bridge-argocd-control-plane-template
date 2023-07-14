@@ -60,9 +60,9 @@ spec:
           values: |
             installCRDs: true
             serviceAccount:
-              name: {{metadata.annotations.aws_cert_manager_service_account}}
+              name: {{metadata.annotations.metadata_aws_cert_manager_service_account}}
               annotations:
-                eks.amazonaws.com/role-arn: {{metadata.annotations.aws_cert_manager_iam_role_arn}}
+                eks.amazonaws.com/role-arn: {{metadata.annotations.metadata_aws_cert_manager_iam_role_arn}}
           #fileParameters:
           #  - name:
           #    path:
@@ -70,7 +70,7 @@ spec:
           #values
           #valuesObject
       destination:
-        namespace: '{{metadata.annotations.aws_cert_manager_namespace}}'
+        namespace: '{{metadata.annotations.metadata_aws_cert_manager_namespace}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}

@@ -35,9 +35,9 @@ spec:
           - ../../../../clusters/{{name}}/addons/{{values.addonChart}}/resources/values.yaml
           - ../../../../charts/addons/{{values.addonChart}}/resources/values.yaml
           values: |
-            region: {{metadata.annotations.aws_region}}
-            log_group_name: {{metadata.annotations.aws_fargate_fluentbit_log_group_name}}
-            log_stream_prefix: {{metadata.annotations.aws_fargate_fluentbit_log_stream_prefix}}
+            region: {{metadata.annotations.metadata_aws_region}}
+            log_group_name: {{metadata.annotations.metadata_aws_fargate_fluentbit_log_group_name}}
+            log_stream_prefix: {{metadata.annotations.metadata_aws_fargate_fluentbit_log_stream_prefix}}
           #fileParameters:
           #  - name:
           #    path:
