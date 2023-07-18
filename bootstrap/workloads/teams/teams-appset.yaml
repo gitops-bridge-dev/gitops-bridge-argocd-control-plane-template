@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: teams
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
     - matrix:
         generators:

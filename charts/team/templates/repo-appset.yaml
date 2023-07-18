@@ -6,6 +6,8 @@ kind: ApplicationSet
 metadata:
   name: '{{ $.Release.Name }}-{{ . | trimSuffix "-deploy" }}'
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
   - git:
       repoURL: 'https://github.com/{{ $.Values.githubOrg | default $.Release.Name }}/{{ . }}'
