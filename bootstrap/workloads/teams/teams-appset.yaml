@@ -24,7 +24,7 @@ spec:
                   - in-cluster
   template:
     metadata:
-      name: 'team-{{path.basename}}'
+      name: 'team-{{name}}-{{path.basename}}'
     spec:
       project: default
       source:
