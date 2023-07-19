@@ -9,7 +9,7 @@ spec:
     - matrix:
         generators:
         - git:
-            repoURL: https://github.com/csantanapr/gitops-control-plane
+            repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
             revision: HEAD
             directories:
             - path: "teams/workloads/*"
@@ -34,7 +34,7 @@ spec:
           - '../../{{path}}/values.yaml'
           values: |
             cluster: '{{name}}'
-        repoURL: 'https://github.com/csantanapr/gitops-control-plane'
+        repoURL: 'https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template'
         path: charts/team
         targetRevision: HEAD
       destination:

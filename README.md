@@ -2,7 +2,7 @@
 
 Control Plane repository defines the desired state of shared infrastructure components and enables self-service onboarding process for the application developer teams.
 
-This git repository is part of the project [GitOps Bridge](https://github.com/csantanapr/gitops-bridge)
+This git repository is part of the project [GitOps Bridge](https://github.com/gitops-bridge-dev/gitops-bridge)
 
 Repository contains the following directories:
 

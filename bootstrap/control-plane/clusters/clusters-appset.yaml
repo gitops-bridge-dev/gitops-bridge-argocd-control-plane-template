@@ -17,7 +17,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/csantanapr/gitops-control-plane
+        repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
         targetRevision: HEAD
         path: 'clusters/{{name}}'
         directory:

@@ -50,7 +50,7 @@ spec:
           - /metadata/annotations
       project: default
       sources:
-      - repoURL: 'https://github.com/csantanapr/gitops-control-plane'
+      - repoURL: 'https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template'
         targetRevision: HEAD
         ref: values
       - chart: '{{values.addonChart}}'
