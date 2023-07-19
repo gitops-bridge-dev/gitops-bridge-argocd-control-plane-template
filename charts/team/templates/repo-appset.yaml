@@ -4,7 +4,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: '{{ $.Release.Name }}-{{ . | trimSuffix "-deploy" }}'
+  name: {{ $.Values.cluster }}-{{ $.Release.Name }}-{{ . | trimSuffix "-deploy" }}
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
@@ -16,7 +16,7 @@ spec:
         - path: env/*
   template:
     metadata:
-      name: '{{ $.Release.Name }}-{{ . | trimSuffix "-deploy" }}-{{ "{{" }}path.basename{{ "}}" }}'
+      name: {{ $.Values.cluster }}-{{ $.Release.Name }}-{{ . | trimSuffix "-deploy" }}-{{ "{{" }}path.basename{{ "}}" }}
       # annotations:
       #   notifications.argoproj.io/subscribe.on-deployed.github: ""
     spec:
