@@ -20,7 +20,7 @@ spec:
       # annotations:
       #   notifications.argoproj.io/subscribe.on-deployed.github: ""
     spec:
-      project: '{{ $.Release.Name }}'
+      project: {{ $.Values.cluster }}-{{ $.Release.Name }}
       source:
         repoURL: 'https://github.com/{{ $.Values.githubOrg | default $.Release.Name }}/{{ . }}'
         targetRevision: 'HEAD'
