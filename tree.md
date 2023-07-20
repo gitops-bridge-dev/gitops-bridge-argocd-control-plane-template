@@ -56,7 +56,7 @@
 │       ├── addons
 ├── teams
 │   └── workloads
-│       └── csantanapr
+│       └── gitops-bridge-dev
 │           └── values.yaml
 
 

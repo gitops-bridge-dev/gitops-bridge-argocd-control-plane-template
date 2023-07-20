@@ -70,7 +70,7 @@ Repository contains the following directories:
 │       ├── addons
 ├── teams
 │   └── workloads
-│       └── csantanapr
+│       └── gitops-bridge-dev
 │           └── values.yaml
 
 
