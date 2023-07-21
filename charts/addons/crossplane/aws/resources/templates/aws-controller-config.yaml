@@ -1,0 +1,12 @@
+{{- if .Values.controller.enabled }}
+apiVersion: pkg.crossplane.io/v1alpha1
+kind: ControllerConfig
+metadata:
+  name: {{ .Values.controller.metadata.name }}
+  annotations:
+  {{- range $key, $value := .Values.controller.metadata.annotations }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+spec:
+  {{- .Values.controller.spec | toYaml | nindent 2 }}
+{{- end }}

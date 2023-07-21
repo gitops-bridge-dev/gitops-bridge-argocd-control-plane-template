@@ -1,0 +1,12 @@
+{{- if .Values.providerConfig.enabled }}
+apiVersion: aws.crossplane.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: {{ .Values.providerConfig.metadata.name }}
+  annotations:
+  {{- range $key, $value := .Values.providerConfig.metadata.annotations }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+spec:
+  {{- .Values.providerConfig.spec | toYaml | nindent 2 }}
+{{- end }}
