@@ -2,22 +2,12 @@ controller:
   enabled: true
   metadata:
     name: "aws-controller-config"
-    annotations:
-      eks.amazonaws.com/role-arn: "replace-me"
+    annotations: {}
   spec:
     podSecurityContext:
       fsGroup: 2000
     args:
       - --debug
-
-providerConfig:
-  enabled: true
-  metadata:
-    name: "aws-provider-config"
-    annotations: {}
-  spec:
-    credentials:
-      source: InjectedIdentity
 
 provider:
   enabled: true
@@ -27,3 +17,12 @@ provider:
   package:
     registry: xpkg.upbound.io/crossplane-contrib/provider-aws
     version: "v0.41.1"
+
+providerConfig:
+  enabled: true
+  metadata:
+    name: "aws-provider-config"
+    annotations: {}
+  spec:
+    credentials:
+      source: InjectedIdentity
