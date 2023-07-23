@@ -2,3 +2,4 @@ global:
   iam_role_arn: null
   enabled_aws: true
   enabled_kubernetes: true
+  enabled_helm: true

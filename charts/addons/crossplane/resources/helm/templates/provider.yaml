@@ -1,0 +1,28 @@
+{{- if and .Values.global.enabled_helm .Values.provider.enabled }}
+{{- with .Values.provider }}
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: {{ .metadata.name }}
+  {{- if or .metadata.annotations }}
+  annotations:
+    {{- if or $.Values.global.iam_role_arn .metadata.iam_role_arn }}
+    eks.amazonaws.com/role-arn: {{ default $.Values.global.iam_role_arn .metadata.role_arn }}
+    {{- end }}
+    {{- range $key, $value := .metadata.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+  {{- if .metadata.labels }}
+  labels:
+    {{- range $key, $value := .metadata.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  package: {{ .package.registry }}:{{ .package.version }}
+  controllerConfigRef:
+    name: {{ $.Values.controllerConfig.metadata.name }}
+{{- end }}
+{{- end }}
+

@@ -1,7 +1,7 @@
-{{- if and .Values.global.enabled_kubernetes .Values.providerConfig.enabled }}
-{{- with .Values.providerConfig }}
-apiVersion: kubernetes.crossplane.io/v1alpha1
-kind: ProviderConfig
+{{- if and .Values.global.enabled_helm .Values.controllerConfig.enabled }}
+{{- with .Values.controllerConfig }}
+apiVersion: pkg.crossplane.io/v1alpha1
+kind: ControllerConfig
 metadata:
   name: {{ .metadata.name }}
   {{- if .metadata.annotations }}
