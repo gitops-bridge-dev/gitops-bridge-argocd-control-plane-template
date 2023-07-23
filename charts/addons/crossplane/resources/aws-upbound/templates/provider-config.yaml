@@ -1,6 +1,6 @@
 {{- if and .Values.global.enabled_aws_upbound .Values.providerConfig.enabled }}
 {{- with .Values.providerConfig }}
-apiVersion: aws.crossplane.io/v1beta1
+apiVersion: aws.upbound.io/v1beta1
 kind: ProviderConfig
 metadata:
   name: {{ .metadata.name }}
