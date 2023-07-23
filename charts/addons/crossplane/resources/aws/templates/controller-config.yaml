@@ -4,15 +4,15 @@ apiVersion: pkg.crossplane.io/v1alpha1
 kind: ControllerConfig
 metadata:
   name: {{ .metadata.name }}
-  {{- if or $.Values.global.iam_role_arn_aws .metadata.iam_role_arn .metadata.annotations }}
   annotations:
+    argocd.argoproj.io/sync-wave: "1"
     {{- if or $.Values.global.iam_role_arn_aws .metadata.iam_role_arn }}
     eks.amazonaws.com/role-arn: {{ default $.Values.global.iam_role_arn_aws .metadata.role_arn }}
     {{- end }}
     {{- range $key, $value := .metadata.annotations }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
-  {{- end }}
+
   {{- if .metadata.labels }}
   labels:
     {{- range $key, $value := .metadata.labels }}

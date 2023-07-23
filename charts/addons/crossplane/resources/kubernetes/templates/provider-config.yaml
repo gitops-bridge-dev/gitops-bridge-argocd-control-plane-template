@@ -4,12 +4,12 @@ apiVersion: kubernetes.crossplane.io/v1alpha1
 kind: ProviderConfig
 metadata:
   name: {{ .metadata.name }}
-  {{- if .metadata.annotations }}
   annotations:
+    argocd.argoproj.io/sync-wave: "3"
     {{- range $key, $value := .metadata.annotations }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
-  {{- end }}
+
   {{- if .metadata.labels }}
   labels:
     {{- range $key, $value := .metadata.labels }}
