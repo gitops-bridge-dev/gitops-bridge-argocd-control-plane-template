@@ -1,4 +1,4 @@
-{{- if and .Values.global.enabled_aws .Values.controllerConfig.enabled }}
+{{- if and .Values.global.enabled_aws_upbound .Values.controllerConfig.enabled }}
 {{- with .Values.controllerConfig }}
 apiVersion: pkg.crossplane.io/v1alpha1
 kind: ControllerConfig

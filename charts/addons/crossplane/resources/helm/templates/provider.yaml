@@ -4,11 +4,8 @@ apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: {{ .metadata.name }}
-  {{- if or .metadata.annotations }}
+  {{- if .metadata.annotations }}
   annotations:
-    {{- if or $.Values.global.iam_role_arn .metadata.iam_role_arn }}
-    eks.amazonaws.com/role-arn: {{ default $.Values.global.iam_role_arn .metadata.role_arn }}
-    {{- end }}
     {{- range $key, $value := .metadata.annotations }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
@@ -20,7 +17,7 @@ metadata:
     {{- end }}
   {{- end }}
 spec:
-  package: {{ .package.registry }}:{{ .package.version }}
+  package: {{ .package.registry }}:{{ default .package.version $.Values.global.helm_version }}
   controllerConfigRef:
     name: {{ $.Values.controllerConfig.metadata.name }}
 {{- end }}

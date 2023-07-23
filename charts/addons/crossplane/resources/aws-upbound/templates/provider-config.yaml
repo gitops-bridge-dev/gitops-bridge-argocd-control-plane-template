@@ -1,7 +1,7 @@
-{{- if and .Values.global.enabled_aws .Values.provider.enabled }}
-{{- with .Values.provider }}
-apiVersion: pkg.crossplane.io/v1
-kind: Provider
+{{- if and .Values.global.enabled_aws_upbound .Values.providerConfig.enabled }}
+{{- with .Values.providerConfig }}
+apiVersion: aws.crossplane.io/v1beta1
+kind: ProviderConfig
 metadata:
   name: {{ .metadata.name }}
   {{- if .metadata.annotations }}
@@ -17,9 +17,6 @@ metadata:
     {{- end }}
   {{- end }}
 spec:
-  package: {{ .package.registry }}:{{ default .package.version $.Values.global.aws_version }}
-  controllerConfigRef:
-    name: {{ $.Values.controllerConfig.metadata.name }}
+  {{- .spec | toYaml | nindent 2 }}
 {{- end }}
 {{- end }}
-

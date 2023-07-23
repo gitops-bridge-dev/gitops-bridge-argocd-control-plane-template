@@ -3,3 +3,10 @@ global:
   enabled_aws: true
   enabled_kubernetes: true
   enabled_helm: true
+  enabled_aws_upbound: true
+
+
+aws-upbound:
+  providers:
+  - accessanalyzer
+  - amplify
