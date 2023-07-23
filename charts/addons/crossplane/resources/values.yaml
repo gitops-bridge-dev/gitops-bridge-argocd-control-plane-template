@@ -8,5 +8,16 @@ global:
 
 aws-upbound:
   providers:
-  - accessanalyzer
-  - amplify
+  - cloudfront
+  - cloudwatchlogs
+  - dynamodb
+  - ec2
+  - eks
+  - firehose
+  - iam
+  - kms
+  - lambda
+  - rds
+  - s3
+  - sns
+  - sqs
