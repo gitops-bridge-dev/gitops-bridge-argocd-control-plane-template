@@ -1,9 +1,10 @@
 global:
-  iam_role_arn: null
   enabled_aws: true
+  iam_role_arn_aws: null
+  enabled_aws_upbound: true
+  iam_role_arn_aws_upbound: null
   enabled_kubernetes: true
   enabled_helm: true
-  enabled_aws_upbound: true
 
 
 aws-upbound:

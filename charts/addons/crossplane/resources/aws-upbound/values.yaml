@@ -1,5 +1,5 @@
 global:
-  iam_role_arn: null
+  iam_role_arn_aws_upbound: null
   enabled_aws_upbound: true
   aws_upbound_version: v0.37.0
   aws_upbound_registry: xpkg.upbound.io/upbound
