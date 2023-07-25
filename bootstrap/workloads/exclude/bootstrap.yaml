@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     path: bootstrap/workloads
-    repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
+    repoURL: https://github.com/allamand/gitops-bridge-argocd-control-plane-template
     directory:
       recurse: true
       exclude: exclude/*

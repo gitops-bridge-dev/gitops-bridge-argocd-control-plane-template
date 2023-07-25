@@ -58,6 +58,14 @@ spec:
           - $values/charts/addons/{{values.addonChart}}/values.yaml
           - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
           - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
+          values: |
+            configs:
+              secret:
+                argocdServerAdminPassword: {{metadata.annotations.metadata_argocd_password}}
+            server:
+              service:
+                type: "LoadBalancer"
+
       destination:
         namespace: '{{values.addonChartRepositoryNamespace}}'
         name: '{{name}}'
