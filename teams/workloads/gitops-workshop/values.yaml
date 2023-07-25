@@ -1,0 +1,10 @@
+email: gitops@example.com # Replace with email found in User Info page in Argo CD.
+cluster: cluster-1-dev
+prefix: workloads
+githubOrg: seb-tmp
+namespaces:
+  - dev
+  - stage
+  - prod
+repos:
+  - eks-blueprints-workloads
