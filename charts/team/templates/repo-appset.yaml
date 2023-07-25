@@ -13,7 +13,7 @@ spec:
       repoURL: 'https://github.com/{{ $.Values.githubOrg | default $.Release.Name }}/{{ . }}'
       revision: HEAD
       directories:
-        - path: env/*
+        - path: {{ $.Values.path }}
   template:
     metadata:
       name: {{ $.Values.cluster }}-{{ $.Release.Name }}-{{ . | trimSuffix "-deploy" }}-{{ "{{" }}path.basename{{ "}}" }}
