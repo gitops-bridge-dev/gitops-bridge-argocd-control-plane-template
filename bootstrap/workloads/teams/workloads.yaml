@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: workloads
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      values: |
+        "account": "{{metadata.annotationsmetadata_aws_account_id}}"
+        "clusterName": "{{metadata.annotations.cluster_name}}"
+        "labels":
+          "env": "eks-blueprint-workshop-blue"
+          "myapp": "myvalue"
+        "region": "eu-west-1"
+        "repoUrl": "git@github.com:seb-demo/eks-blueprints-workloads.git"
+        "spec":
+          "blueprint": "terraform"
+          "clusterName": "{{metadata.annotations.cluster_name}}"
+          "env": "dev"
+          "ingress":
+            "argocd_route53_weight": "100"
+            "host": "{{metadata.annotations.cluster_name}}.sallaman.people.aws.dev"
+            "route53_weight": "100"
+            "type": "alb"
+          "karpenterInstanceProfile": "Karpenter-dev-eks-blue-20230703141552685700000014"
+          "source":
+            "repoURL": "git@github.com:seb-demo/eks-blueprints-workloads.git"
+            "targetRevision": "working_eks_blue"
+    path: envs/dev
+    repoURL: git@github.com:seb-demo/eks-blueprints-workloads.git
+    targetRevision: working_eks_blue
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 3m
+      limit: 10
+    syncOptions:
+      - Validate=false
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - RespectIgnoreDifferences=true
