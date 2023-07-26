@@ -1,19 +1,19 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: {{ .Values.cluster }}-{{ .Release.Name }}-namespaces
-spec:
-  project: default
-  source:
-    helm:
-      releaseName: '{{ .Release.Name }}'
-      valueFiles:
-      - '../../teams/{{ .Values.prefix }}/{{ .Release.Name }}/values.yaml'
-    repoURL: 'https://github.com/allamand/gitops-bridge-argocd-control-plane-template'
-    path: charts/namespaces
-    targetRevision: HEAD
-  destination:
-    namespace: '*'
-    name: {{ .Values.cluster }}
-  syncPolicy:
-    automated: {}
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: {{ .Values.cluster }}-{{ .Release.Name }}-namespaces
+# spec:
+#   project: default
+#   source:
+#     helm:
+#       releaseName: '{{ .Release.Name }}'
+#       valueFiles:
+#       - '../../teams/{{ .Values.prefix }}/{{ .Release.Name }}/values.yaml'
+#     repoURL: 'https://github.com/allamand/gitops-bridge-argocd-control-plane-template'
+#     path: charts/namespaces
+#     targetRevision: HEAD
+#   destination:
+#     namespace: '*'
+#     name: {{ .Values.cluster }}
+#   syncPolicy:
+#     automated: {}

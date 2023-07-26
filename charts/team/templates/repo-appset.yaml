@@ -16,7 +16,8 @@ spec:
         - path: {{ $.Values.path }}
   template:
     metadata:
-      name: {{ $.Values.cluster }}-{{ $.Release.Name }}-{{ . | trimSuffix "-deploy" }}-{{ "{{" }}path.basename{{ "}}" }}
+      #name: {{ $.Values.cluster }}-{{ $.Release.Name }}-{{ . | trimSuffix "-deploy" }}-{{ "{{" }}path.basename{{ "}}" }}
+      name: 'team-{{ $.Release.Name }}'
       # annotations:
       #   notifications.argoproj.io/subscribe.on-deployed.github: ""
     spec:
@@ -30,7 +31,8 @@ spec:
         # path: './'
       destination:
         name: '{{ $.Values.cluster }}'
-        namespace: '{{ $.Release.Name }}-{{ "{{" }}path.basename{{ "}}" }}'
+        #namespace: '{{ $.Release.Name }}-{{ "{{" }}path.basename{{ "}}" }}'
+        namespace: 'team-{{ $.Release.Name }}'
       syncPolicy:
         automated: {}
 {{- end }}
