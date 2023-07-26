@@ -1,7 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: {{ .Values.cluster }}-{{ .Release.Name }}
+  #name: {{ .Values.cluster }}-{{ .Release.Name }}
+  name: 'team-{{ .Release.Name }}'
 spec:
   sourceRepos:
     - 'https://github.com/{{ .Values.githubOrg | default .Release.Name }}/*'
@@ -11,6 +12,6 @@ spec:
   roles:
   - name: admin
     policies:
-    - p, proj:team-{{ .Release.Name }}:admin, *, *, tezam-{{ .Release.Name }}/*, allow
+    - p, proj:team-{{ .Release.Name }}:admin, *, *, team-{{ .Release.Name }}/*, allow
     groups:
     - '{{ .Values.email }}' # Copy email shown in the "User info" of Argo CD.
