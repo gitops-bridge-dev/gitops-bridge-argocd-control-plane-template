@@ -58,11 +58,7 @@ spec:
           - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
           - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
           - $values/charts/addons/{{values.addonChart}}/values.yaml
-          values: |
-            controller:
-              serviceAccount:
-                annotations:
-                  eks.amazonaws.com/role-arn: "{{metadata.annotations.metadata_aws_argocd_iam_role_arn}}"
+          #values: |
           #fileParameters:
           #  - name:
           #    path:
