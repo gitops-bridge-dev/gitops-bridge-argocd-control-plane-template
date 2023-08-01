@@ -50,6 +50,11 @@ spec:
         namespace: '{{values.addonChartNamespace}}'
         name: '{{name}}'
       syncPolicy:
+        retry:
+          backoff:
+            duration: 2m
+            factor: 2
+            maxDuration: 32m
         automated: {}
         syncOptions:
           - CreateNamespace=true
