@@ -22,7 +22,7 @@ spec:
                   operator: NotIn
                   values:
                     - in-cluster
-                - key: aws_enable_cert_manager
+                - key: enable_aws_cert_manager
                   operator: In
                   values:
                     - 'true'

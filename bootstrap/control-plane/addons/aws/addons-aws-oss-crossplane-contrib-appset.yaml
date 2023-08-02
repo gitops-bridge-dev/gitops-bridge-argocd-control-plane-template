@@ -16,7 +16,7 @@ spec:
             operator: NotIn
             values:
               - in-cluster
-          - key: aws_enable_crossplane
+          - key: enable_aws_crossplane
             operator: In
             values:
               - 'true'

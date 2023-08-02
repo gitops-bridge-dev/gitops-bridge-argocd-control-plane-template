@@ -22,7 +22,7 @@ spec:
                   operator: NotIn
                   values:
                     - in-cluster
-                - key: aws_enable_argocd
+                - key: enable_aws_argocd
                   operator: In
                   values:
                     - 'true'

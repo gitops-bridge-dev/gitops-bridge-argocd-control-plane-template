@@ -22,7 +22,7 @@ spec:
                   operator: NotIn
                   values:
                     - in-cluster
-                - key: aws_enable_aws_for_fluentbit
+                - key: enable_aws_for_fluentbit
                   operator: In
                   values:
                     - 'true'

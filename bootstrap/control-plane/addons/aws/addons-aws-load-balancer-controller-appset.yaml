@@ -22,7 +22,7 @@ spec:
                   operator: NotIn
                   values:
                     - in-cluster
-                - key: aws_enable_aws_load_balancer_controller
+                - key: enable_aws_load_balancer_controller
                   operator: In
                   values:
                     - 'true'

@@ -22,7 +22,7 @@ spec:
                   operator: NotIn
                   values:
                     - in-cluster
-                - key: aws_enable_aws_privateca_issuer
+                - key: enable_aws_privateca_issuer
                   operator: In
                   values:
                     - 'true'

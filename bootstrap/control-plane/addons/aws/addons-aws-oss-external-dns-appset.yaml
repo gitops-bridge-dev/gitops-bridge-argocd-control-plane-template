@@ -22,7 +22,7 @@ spec:
                   operator: NotIn
                   values:
                     - in-cluster
-                - key: aws_enable_external_dns
+                - key: enable_aws_external_dns
                   operator: In
                   values:
                     - 'true'

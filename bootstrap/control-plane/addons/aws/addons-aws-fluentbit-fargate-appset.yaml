@@ -15,7 +15,7 @@ spec:
             operator: NotIn
             values:
               - in-cluster
-          - key: aws_enable_fargate_fluentbit
+          - key: enable_aws_fargate_fluentbit
             operator: In
             values:
               - 'true'

@@ -15,7 +15,7 @@ spec:
             operator: NotIn
             values:
               - in-cluster
-          - key: aws_enable_ebs_csi_resources
+          - key: enable_aws_ebs_csi_resources
             operator: In
             values:
               - 'true'

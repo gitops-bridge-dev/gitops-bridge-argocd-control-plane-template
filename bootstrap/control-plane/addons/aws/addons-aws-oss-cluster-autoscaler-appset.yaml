@@ -22,7 +22,7 @@ spec:
                   operator: NotIn
                   values:
                     - in-cluster
-                - key: aws_enable_cluster_autoscaler
+                - key: enable_aws_cluster_autoscaler
                   operator: In
                   values:
                     - 'true'

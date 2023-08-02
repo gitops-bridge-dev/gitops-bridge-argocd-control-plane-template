@@ -22,7 +22,7 @@ spec:
                   operator: NotIn
                   values:
                     - in-cluster
-                - key: aws_enable_aws_fsx_csi_driver
+                - key: enable_aws_fsx_csi_driver
                   operator: In
                   values:
                     - 'true'
