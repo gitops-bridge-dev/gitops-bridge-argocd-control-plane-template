@@ -52,6 +52,8 @@ server:
     service:
       annotations:
         prometheus.io/scrape: true
+  service:
+    type: LoadBalancer
 
 configs:
   repositories:
