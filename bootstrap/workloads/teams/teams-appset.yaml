@@ -34,7 +34,7 @@ spec:
           - '../../{{path}}/values.yaml'
           values: |
             cluster: '{{name}}'
-        repoURL: 'https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template'
+        repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
         path: charts/team
         targetRevision: HEAD
       destination:
