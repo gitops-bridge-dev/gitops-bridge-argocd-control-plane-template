@@ -46,11 +46,6 @@ spec:
     spec:
       project: default
       sources:
-      - chart: '{{values.addonChart}}/{{values.addonChart}}-crd'
-        repoURL: '{{values.addonChartRepository}}'
-        targetRevision: '{{values.addonChartVersion}}'
-        helm:
-          releaseName: '{{values.addonChart}}-crd'
       - repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
         targetRevision: HEAD
         ref: values
@@ -75,7 +70,6 @@ spec:
               name: {{metadata.annotations.metadata_aws_karpenter_service_account}}
               annotations:
                 eks.amazonaws.com/role-arn: {{metadata.annotations.metadata_aws_karpenter_iam_role_arn}}
-          skipCrds: true
       destination:
         namespace: '{{metadata.annotations.metadata_aws_karpenter_namespace}}'
         name: '{{name}}'
