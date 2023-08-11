@@ -71,3 +71,8 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true  # Big CRDs.
+      ignoreDifferences:
+      - kind: Secret
+        name: aws-load-balancer-tls
+        jsonPointers:
+          - /data
