@@ -22,7 +22,7 @@ spec:
                   operator: NotIn
                   values:
                     - in-cluster
-                - key: enable_aws_velero
+                - key: enable_velero
                   operator: In
                   values:
                     - 'true'
@@ -61,18 +61,18 @@ spec:
             configuration:
               provider: aws
               backupStorageLocation:
-                prefix: {{metadata.annotations.metadata_aws_velero_backup_s3_bucket_prefix}}
-                bucket: {{metadata.annotations.metadata_aws_velero_backup_s3_bucket_name}}
-                region: {{metadata.annotations.metadata_aws_region}}
+                prefix: {{metadata.annotations.velero_backup_s3_bucket_prefix}}
+                bucket: {{metadata.annotations.velero_backup_s3_bucket_name}}
+                region: {{metadata.annotations.aws_region}}
               volumeSnapshotLocation:
-                region: {{metadata.annotations.metadata_aws_region}}
+                region: {{metadata.annotations.aws_region}}
             credentials:
               useSecret: false
             serviceAccount:
               server:
-                name: {{metadata.annotations.metadata_aws_velero_service_account}}
+                name: {{metadata.annotations.velero_service_account}}
                 annotations:
-                  eks.amazonaws.com/role-arn: {{metadata.annotations.metadata_aws_velero_iam_role_arn}}
+                  eks.amazonaws.com/role-arn: {{metadata.annotations.velero_iam_role_arn}}
             initContainers:
             - name: velero-plugin-for-aws
               image: velero/velero-plugin-for-aws:v1.7.0
@@ -81,7 +81,7 @@ spec:
                 - mountPath: /target
                   name: plugins
       destination:
-        namespace: '{{metadata.annotations.metadata_aws_velero_namespace}}'
+        namespace: '{{metadata.annotations.velero_namespace}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}

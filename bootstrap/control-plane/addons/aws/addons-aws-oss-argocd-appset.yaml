@@ -61,13 +61,13 @@ spec:
             controller:
               serviceAccount:
                 annotations:
-                  eks.amazonaws.com/role-arn: {{metadata.annotations.metadata_aws_argocd_iam_role_arn}}
+                  eks.amazonaws.com/role-arn: {{metadata.annotations.aws_argocd_iam_role_arn}}
             server:
               serviceAccount:
                 annotations:
-                  eks.amazonaws.com/role-arn: {{metadata.annotations.metadata_aws_argocd_iam_role_arn}}
+                  eks.amazonaws.com/role-arn: {{metadata.annotations.aws_argocd_iam_role_arn}}
       destination:
-        namespace: '{{metadata.annotations.metadata_aws_argocd_namespace}}'
+        namespace: '{{metadata.annotations.aws_argocd_namespace}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}

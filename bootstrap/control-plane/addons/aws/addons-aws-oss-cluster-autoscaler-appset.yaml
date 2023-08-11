@@ -22,7 +22,7 @@ spec:
                   operator: NotIn
                   values:
                     - in-cluster
-                - key: enable_aws_cluster_autoscaler
+                - key: enable_cluster_autoscaler
                   operator: In
                   values:
                     - 'true'
@@ -59,17 +59,17 @@ spec:
           - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
           values: |
             image:
-              tag: {{metadata.annotations.metadata_aws_cluster_autoscaler_image_tag}}
-            awsRegion: {{metadata.annotations.metadata_aws_region}}
+              tag: {{metadata.annotations.cluster_autoscaler_image_tag}}
+            awsRegion: {{metadata.annotations.aws_region}}
             autoDiscovery:
-              clusterName: {{metadata.annotations.cluster_name}}
+              clusterName: {{metadata.annotations.aws_cluster_name}}
             rbac:
               serviceAccount:
-                name: {{metadata.annotations.metadata_aws_cluster_autoscaler_service_account}}
+                name: {{metadata.annotations.cluster_autoscaler_service_account}}
                 annotations:
-                  eks.amazonaws.com/role-arn: {{metadata.annotations.metadata_aws_cluster_autoscaler_iam_role_arn}}
+                  eks.amazonaws.com/role-arn: {{metadata.annotations.cluster_autoscaler_iam_role_arn}}
       destination:
-        namespace: '{{metadata.annotations.metadata_aws_cluster_autoscaler_namespace}}'
+        namespace: '{{metadata.annotations.cluster_autoscaler_namespace}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}

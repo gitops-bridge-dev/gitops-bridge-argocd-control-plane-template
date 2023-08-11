@@ -24,7 +24,7 @@ spec:
                   operator: NotIn
                   values:
                     - in-cluster
-                - key: enable_aws_karpenter
+                - key: enable_karpenter
                   operator: In
                   values:
                     - 'true'
@@ -62,16 +62,16 @@ spec:
           values: |
             settings:
               aws:
-                clusterName: {{metadata.annotations.cluster_name}}
-                clusterEndpoint: {{metadata.annotations.metadata_aws_karpenter_cluster_endpoint}}
-                defaultInstanceProfile: {{metadata.annotations.metadata_aws_karpenter_node_instance_profile_name}}
-                interruptionQueueName: {{metadata.annotations.metadata_aws_karpenter_sqs_queue_name}}
+                clusterName: {{metadata.annotations.aws_cluster_name}}
+                clusterEndpoint: {{metadata.annotations.karpenter_cluster_endpoint}}
+                defaultInstanceProfile: {{metadata.annotations.karpenter_node_instance_profile_name}}
+                interruptionQueueName: {{metadata.annotations.karpenter_sqs_queue_name}}
             serviceAccount:
-              name: {{metadata.annotations.metadata_aws_karpenter_service_account}}
+              name: {{metadata.annotations.karpenter_service_account}}
               annotations:
-                eks.amazonaws.com/role-arn: {{metadata.annotations.metadata_aws_karpenter_iam_role_arn}}
+                eks.amazonaws.com/role-arn: {{metadata.annotations.karpenter_iam_role_arn}}
       destination:
-        namespace: '{{metadata.annotations.metadata_aws_karpenter_namespace}}'
+        namespace: '{{metadata.annotations.karpenter_namespace}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}
