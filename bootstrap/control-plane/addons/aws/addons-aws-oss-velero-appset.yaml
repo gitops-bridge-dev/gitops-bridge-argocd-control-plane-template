@@ -14,7 +14,7 @@ spec:
               values:
                 addonChart: velero
                 # anything not staging or prod use this version
-                addonChartVersion: '3.1.6'
+                addonChartVersion: '4.4.1'
                 addonChartRepository: https://vmware-tanzu.github.io/helm-charts
               selector:
                 matchExpressions:
@@ -31,13 +31,13 @@ spec:
                 matchLabels:
                   environment: staging
               values:
-                addonChartVersion: '3.1.6'
+                addonChartVersion: '4.4.1'
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: '3.1.6'
+                addonChartVersion: '4.4.1'
   template:
     metadata:
       name: 'addon-{{name}}-{{values.addonChart}}'
@@ -59,15 +59,17 @@ spec:
           - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
           values: |
             configuration:
-              provider: aws
               backupStorageLocation:
+              - name: default
+                provider: aws
                 prefix: {{metadata.annotations.velero_backup_s3_bucket_prefix}}
                 bucket: {{metadata.annotations.velero_backup_s3_bucket_name}}
-                region: {{metadata.annotations.aws_region}}
+                config:
+                  region: {{metadata.annotations.aws_region}}
               volumeSnapshotLocation:
-                region: {{metadata.annotations.aws_region}}
-            credentials:
-              useSecret: false
+              - name: default
+                config:
+                  region: {{metadata.annotations.aws_region}}
             serviceAccount:
               server:
                 name: {{metadata.annotations.velero_service_account}}
@@ -75,7 +77,7 @@ spec:
                   eks.amazonaws.com/role-arn: {{metadata.annotations.velero_iam_role_arn}}
             initContainers:
             - name: velero-plugin-for-aws
-              image: velero/velero-plugin-for-aws:v1.7.0
+              image: velero/velero-plugin-for-aws:v1.7.1
               imagePullPolicy: IfNotPresent
               volumeMounts:
                 - mountPath: /target
