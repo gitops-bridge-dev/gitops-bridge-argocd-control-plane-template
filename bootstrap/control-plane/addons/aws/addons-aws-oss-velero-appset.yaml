@@ -68,6 +68,7 @@ spec:
                   region: {{metadata.annotations.aws_region}}
               volumeSnapshotLocation:
               - name: default
+                provider: aws
                 config:
                   region: {{metadata.annotations.aws_region}}
             serviceAccount:
