@@ -1,54 +1,77 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
   name: workloads
 spec:
-  destination:
-    server: https://kubernetes.default.svc
-  project: default
-  source:
-    helm:
-      values: |
-        "account": "{{metadata.annotationsmetadata_aws_account_id}}"
-        "clusterName": "{{metadata.annotations.cluster_name}}"
-        "labels":
-          "env": "eks-blueprint-workshop-blue"
-          "myapp": "myvalue"
-        "region": "eu-west-1"
-        "repoUrl": "git@github.com:seb-demo/eks-blueprints-workloads.git"
-        "spec":
-          "blueprint": "terraform"
-          "clusterName": "{{metadata.annotations.cluster_name}}"
-          "env": "dev"
-          "ingress":
-            "argocd_route53_weight": "100"
-            "host": "{{metadata.annotations.cluster_name}}.sallaman.people.aws.dev"
-            "route53_weight": "100"
-            "type": "alb"
-          "karpenterInstanceProfile": "Karpenter-dev-eks-blue-20230703141552685700000014"
-          "source":
-            #"repoURL": "git@github.com:seb-demo/eks-blueprints-workloads.git"
-            "repoURL": "https://github.com/seb-demo/eks-blueprints-workloads"
-            "targetRevision": "working_eks_blue"
-            "ssh_key_secret_name": github-blueprint-ssh-key"
-    path: envs/dev
-    #repoURL: git@github.com:seb-demo/eks-blueprints-workloads.git
-    repoURL: https://github.com/seb-demo/eks-blueprints-workloads
-    targetRevision: working_eks_blue
-    ssh_key_secret_name: github-blueprint-ssh-key
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    retry:
-      backoff:
-        duration: 10s
-        factor: 2
-        maxDuration: 3m
-      limit: 10
-    syncOptions:
-      - Validate=false
-      - CreateNamespace=true
-      - PrunePropagationPolicy=foreground
-      - PruneLast=true
-      - RespectIgnoreDifferences=true
+    preserveResourcesOnDeletion: true
+  generators:
+    - matrix:
+        generators:
+          - git:
+              repoURL: https://github.com/seb-demo/eks-blueprints-workloads
+              revision: working_eks_blue
+              ssh_key_secret_name: github-blueprint-ssh-key
+              directories:
+                - path: 'envs/dev/*'
+              # - path: teams/USERNAME
+              #   exclude: true
+          - clusters:
+              selector:
+                matchExpressions:
+                  - key: akuity.io/argo-cd-cluster-name
+                    operator: NotIn
+                    values:
+                      - in-cluster
+  template:
+    metadata:
+      name: 'workload-{{name}}'
+    spec:
+      project: default
+      sources:
+        - repoURL: 'https://github.com/seb-demo/eks-blueprints-workloads'
+          targetRevision: working_eks_blue
+          ssh_key_secret_name: github-blueprint-ssh-key
+          ref: values
+          # - chart: '{{values.addonChart}}'
+          #   repoURL: '{{values.addonChartRepository}}'
+          #   targetRevision: '{{values.addonChartVersion}}'
+          helm:
+            #releaseName: '{{values.addonChart}}'
+            releaseName: 'workloads'
+            ignoreMissingValueFiles: true
+            valueFiles:
+              - $values/charts/addons/{{values.addonChart}}/values.yaml
+              - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
+              - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
+            values: |
+              "account": "{{metadata.annotationsmetadata_aws_account_id}}"
+              "clusterName": "{{metadata.annotations.cluster_name}}"
+              "labels":
+                "env": "eks-blueprint-workshop-blue"
+                "myapp": "myvalue"
+              "region": "eu-west-1"
+              "repoUrl": "git@github.com:seb-demo/eks-blueprints-workloads.git"
+              "spec":
+                "blueprint": "terraform"
+                "clusterName": "{{metadata.annotations.cluster_name}}"
+                "env": "dev"
+                "ingress":
+                  "argocd_route53_weight": "100"
+                  "host": "{{metadata.annotations.cluster_name}}.sallaman.people.aws.dev"
+                  "route53_weight": "100"
+                  "type": "alb"
+                "karpenterInstanceProfile": "Karpenter-dev-eks-blue-20230703141552685700000014"
+                "source":
+                  #"repoURL": "git@github.com:seb-demo/eks-blueprints-workloads.git"
+                  "repoURL": "https://github.com/seb-demo/eks-blueprints-workloads"
+                  "targetRevision": "working_eks_blue"
+                  "ssh_key_secret_name": github-blueprint-ssh-key"
+      destination:
+        #namespace: '{{metadata.annotations.metadata_aws_cluster_autoscaler_namespace}}'
+        name: '{{name}}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true # Big CRDs.
