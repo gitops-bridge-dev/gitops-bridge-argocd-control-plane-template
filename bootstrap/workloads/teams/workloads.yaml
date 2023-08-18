@@ -32,6 +32,7 @@ spec:
     path: envs/dev
     repoURL: git@github.com:seb-demo/eks-blueprints-workloads.git
     targetRevision: working_eks_blue
+    ssh_key_secret_name: github-blueprint-ssh-key
   syncPolicy:
     automated:
       prune: true
