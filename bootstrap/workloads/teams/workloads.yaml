@@ -27,11 +27,13 @@ spec:
             "type": "alb"
           "karpenterInstanceProfile": "Karpenter-dev-eks-blue-20230703141552685700000014"
           "source":
-            "repoURL": "git@github.com:seb-demo/eks-blueprints-workloads.git"
+            #"repoURL": "git@github.com:seb-demo/eks-blueprints-workloads.git"
+            "repoURL": "https://github.com/seb-demo/eks-blueprints-workloads"
             "targetRevision": "working_eks_blue"
             "ssh_key_secret_name": github-blueprint-ssh-key"
     path: envs/dev
-    repoURL: git@github.com:seb-demo/eks-blueprints-workloads.git
+    #repoURL: git@github.com:seb-demo/eks-blueprints-workloads.git
+    repoURL: https://github.com/seb-demo/eks-blueprints-workloads
     targetRevision: working_eks_blue
     ssh_key_secret_name: github-blueprint-ssh-key
   syncPolicy:
