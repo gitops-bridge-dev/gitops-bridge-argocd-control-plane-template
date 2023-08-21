@@ -33,6 +33,7 @@ spec:
           targetRevision: working_eks_blue
           ssh_key_secret_name: github-blueprint-ssh-key
           ref: values
+          path: 'envs/dev/'
           # - chart: '{{values.addonChart}}'
           #   repoURL: '{{values.addonChartRepository}}'
           #   targetRevision: '{{values.addonChartVersion}}'
