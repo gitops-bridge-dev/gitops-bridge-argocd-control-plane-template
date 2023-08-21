@@ -75,5 +75,5 @@ spec:
       ignoreDifferences:
         - kind: Deployment
           jsonPointers:
-            - /spec/template/containers/*/env/*/envFrom.resourceFieldRef.divisor
-            - /spec/template/initContainers/*/env/*/envFrom.resourceFieldRef.divisor
+            - /spec/template/spec/containers/*/env/*/envFrom.resourceFieldRef.divisor
+            - /spec/template/spec/initContainers/*/env/*/envFrom.resourceFieldRef.divisor
