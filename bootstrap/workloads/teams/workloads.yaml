@@ -46,7 +46,7 @@ spec:
               - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
             values: |
-              "account": "{{metadata.annotationsmetadata_aws_account_id}}"
+              "account": "{{metadata.annotations.metadata_aws_account_id}}"
               "clusterName": "{{metadata.annotations.cluster_name}}"
               "labels":
                 "env": "eks-blueprint-workshop-blue"
@@ -62,7 +62,7 @@ spec:
                   "host": "{{metadata.annotations.cluster_name}}.sallaman.people.aws.dev"
                   "route53_weight": "100"
                   "type": "alb"
-                "karpenterInstanceProfile": "Karpenter-dev-eks-blue-20230703141552685700000014"
+                "karpenterInstanceProfile": "{{metadata.annotations.metadata_karpenter_instance_profile}}"
                 "source":
                   #"repoURL": "git@github.com:seb-demo/eks-blueprints-workloads.git"
                   "repoURL": "https://github.com/seb-demo/eks-blueprints-workloads"
