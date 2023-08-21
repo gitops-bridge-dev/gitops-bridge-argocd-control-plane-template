@@ -59,7 +59,7 @@ spec:
                 "env": "dev"
                 "ingress":
                   "argocd_route53_weight": "100"
-                  "host": "{{metadata.annotations.cluster_name}}.sallaman.people.aws.dev"
+                  #"host": "{{metadata.annotations.cluster_name}}.sallaman.people.aws.dev"
                   "route53_weight": "100"
                   "type": "alb"
                 "karpenterInstanceProfile": "{{metadata.annotations.metadata_karpenter_instance_profile}}"
