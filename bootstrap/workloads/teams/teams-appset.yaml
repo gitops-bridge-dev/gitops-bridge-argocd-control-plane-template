@@ -1,45 +1,45 @@
-apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-  name: teams
-spec:
-  syncPolicy:
-    preserveResourcesOnDeletion: true
-  generators:
-    - matrix:
-        generators:
-        - git:
-            repoURL: https://github.com/allamand/gitops-bridge-argocd-control-plane-template
-            revision: HEAD
-            directories:
-            - path: "teams/workloads/*"
-            - path: teams/USERNAME
-              exclude: true
-        - clusters:
-            selector:
-              matchExpressions:
-              - key: akuity.io/argo-cd-cluster-name
-                operator: NotIn
-                values:
-                  - in-cluster
-  template:
-    metadata:
-      name: '{{name}}-team-{{path.basename}}'
-    spec:
-      project: default
-      source:
-        helm:
-          releaseName: '{{path.basename}}'
-          valueFiles:
-          - '../../{{path}}/values.yaml'
-          values: |
-            cluster: '{{name}}'
-        repoURL: 'https://github.com/allamand/gitops-bridge-argocd-control-plane-template'
-        path: charts/team
-        targetRevision: HEAD
-      destination:
-        namespace: 'argocd'
-        server: https://kubernetes.default.svc
-      syncPolicy:
-        automated:
-          allowEmpty: true
+# apiVersion: argoproj.io/v1alpha1
+# kind: ApplicationSet
+# metadata:
+#   name: teams
+# spec:
+#   syncPolicy:
+#     preserveResourcesOnDeletion: true
+#   generators:
+#     - matrix:
+#         generators:
+#         - git:
+#             repoURL: https://github.com/allamand/gitops-bridge-argocd-control-plane-template
+#             revision: HEAD
+#             directories:
+#             - path: "teams/workloads/*"
+#             - path: teams/USERNAME
+#               exclude: true
+#         - clusters:
+#             selector:
+#               matchExpressions:
+#               - key: akuity.io/argo-cd-cluster-name
+#                 operator: NotIn
+#                 values:
+#                   - in-cluster
+#   template:
+#     metadata:
+#       name: '{{name}}-team-{{path.basename}}'
+#     spec:
+#       project: default
+#       source:
+#         helm:
+#           releaseName: '{{path.basename}}'
+#           valueFiles:
+#           - '../../{{path}}/values.yaml'
+#           values: |
+#             cluster: '{{name}}'
+#         repoURL: 'https://github.com/allamand/gitops-bridge-argocd-control-plane-template'
+#         path: charts/team
+#         targetRevision: HEAD
+#       destination:
+#         namespace: 'argocd'
+#         server: https://kubernetes.default.svc
+#       syncPolicy:
+#         automated:
+#           allowEmpty: true
