@@ -73,7 +73,8 @@ spec:
           - CreateNamespace=true
           - ServerSideApply=true  # Big CRDs.
       ignoreDifferences:
-        - kind: Deployment
-          jqPathExpressions:
-            - .spec.template.spec.containers[].env[].valueFrom.resourceFieldRef.divisor
-            - .spec.template.spec.initContainers[].env[].valueFrom.resourceFieldRef.divisor
+      - kind: Deployment
+        jsonPointers:
+        - /spec/template/spec/containers/*/env/*/valueFrom/resourceFieldRef/divisor
+        - /spec/template/spec/initContainers/*/env/*/valueFrom/resourceFieldRef/divisor
+
