@@ -74,6 +74,6 @@ spec:
           - ServerSideApply=true  # Big CRDs.
       ignoreDifferences:
         - kind: Deployment
-          jsonPointers:
-            - /spec/template/spec/containers/*/env/*/envFrom.resourceFieldRef.divisor
-            - /spec/template/spec/initContainers/*/env/*/envFrom.resourceFieldRef.divisor
+          jqPathExpressions:
+            - .spec.template.spec.containers[].env[].valueFrom.resourceFieldRef.divisor
+            - .spec.template.spec.initContainers[].env[].valueFrom.resourceFieldRef.divisor
