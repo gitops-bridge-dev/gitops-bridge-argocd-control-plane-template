@@ -72,3 +72,8 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true  # Big CRDs.
+      ignoreDifferences:
+        - kind: Deployment
+          jsonPointers:
+            - /spec/template/containers/*/env/*/envFrom.resourceFieldRef.divisor
+            - /spec/template/initContainers/*/env/*/envFrom.resourceFieldRef.divisor
