@@ -20,14 +20,14 @@ spec:
                 addonChartRepository: public.ecr.aws
               selector:
                 matchExpressions:
-                - key: akuity.io/argo-cd-cluster-name
-                  operator: NotIn
-                  values:
-                    - in-cluster
-                - key: aws_enable_karpenter
-                  operator: In
-                  values:
-                    - 'true'
+                  - key: akuity.io/argo-cd-cluster-name
+                    operator: NotIn
+                    values:
+                      - in-cluster
+                  - key: enable_karpenter
+                    operator: In
+                    values:
+                      - 'true'
           - clusters:
               selector:
                 matchLabels:
@@ -46,30 +46,30 @@ spec:
     spec:
       project: default
       sources:
-      - repoURL: 'https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template'
-        targetRevision: HEAD
-        ref: values
-      - chart: '{{values.addonChart}}/karpenter'
-        repoURL: '{{values.addonChartRepository}}'
-        targetRevision: '{{values.addonChartVersion}}'
-        helm:
-          releaseName: '{{values.addonChart}}'
-          ignoreMissingValueFiles: true
-          valueFiles:
-          - $values/charts/addons/{{values.addonChart}}/values.yaml
-          - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
-          - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
-          values: |
-            settings:
-              aws:
-                clusterName: {{metadata.annotations.cluster_name}}
-                clusterEndpoint: {{metadata.annotations.metadata_aws_karpenter_cluster_endpoint}}
-                defaultInstanceProfile: {{metadata.annotations.metadata_aws_karpenter_node_instance_profile_name}}
-                interruptionQueueName: {{metadata.annotations.metadata_aws_karpenter_sqs_queue_name}}
-            serviceAccount:
-              name: {{metadata.annotations.metadata_aws_karpenter_service_account}}
-              annotations:
-                eks.amazonaws.com/role-arn: {{metadata.annotations.metadata_aws_karpenter_iam_role_arn}}
+        - repoURL: 'https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template'
+          targetRevision: HEAD
+          ref: values
+        - chart: '{{values.addonChart}}/karpenter'
+          repoURL: '{{values.addonChartRepository}}'
+          targetRevision: '{{values.addonChartVersion}}'
+          helm:
+            releaseName: '{{values.addonChart}}'
+            ignoreMissingValueFiles: true
+            valueFiles:
+              - $values/charts/addons/{{values.addonChart}}/values.yaml
+              - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
+              - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
+            values: |
+              settings:
+                aws:
+                  clusterName: {{metadata.annotations.cluster_name}}
+                  clusterEndpoint: {{metadata.annotations.metadata_aws_karpenter_cluster_endpoint}}
+                  defaultInstanceProfile: {{metadata.annotations.metadata_aws_karpenter_node_instance_profile_name}}
+                  interruptionQueueName: {{metadata.annotations.metadata_aws_karpenter_sqs_queue_name}}
+              serviceAccount:
+                name: {{metadata.annotations.metadata_aws_karpenter_service_account}}
+                annotations:
+                  eks.amazonaws.com/role-arn: {{metadata.annotations.metadata_aws_karpenter_iam_role_arn}}
       destination:
         namespace: '{{metadata.annotations.metadata_aws_karpenter_namespace}}'
         name: '{{name}}'
@@ -77,4 +77,4 @@ spec:
         automated: {}
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply=true  # Big CRDs.
+          - ServerSideApply=true # Big CRDs.
