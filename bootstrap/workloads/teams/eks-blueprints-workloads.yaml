@@ -8,12 +8,12 @@ spec:
   generators:
     - matrix:
         generators:
-          # - git:
-          #     repoURL: git@github.com:seb-demo/eks-blueprints-workloads
-          #     #repoURL: https://github.com/seb-demo/eks-blueprints-workloads
-          #     revision: working_eks_blue
-          #     directories:
-          #       - path: 'envs/dev/*'
+          - git:
+              repoURL: git@github.com:seb-tmp/eks-blueprints-workloads
+              #repoURL: https://github.com/seb-demo/eks-blueprints-workloads
+              revision: working_eks_blue
+              directories:
+                - path: 'envs/dev/*'
           - clusters:
               selector:
                 matchExpressions:
