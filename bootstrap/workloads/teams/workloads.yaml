@@ -62,12 +62,12 @@ spec:
                   #"host": "{{metadata.annotations.cluster_name}}.sallaman.people.aws.dev"
                   "route53_weight": "100"
                   "type": "alb"
-                "karpenterInstanceProfile": "{{metadata.annotations.metadata_karpenter_instance_profile}}"
+                "karpenterInstanceProfile": "{{metadata.annotations.karpenter_node_instance_profile_name}}"
                 "source":
                   #"repoURL": "git@github.com:seb-demo/eks-blueprints-workloads.git"
                   "repoURL": "https://github.com/seb-demo/eks-blueprints-workloads"
                   "targetRevision": "working_eks_blue"
-                  "ssh_key_secret_name": github-blueprint-ssh-key
+                  "ssh_key_secret_name": "{{metadata.annotations.aws_secret_manager_workload_secret_name}}"
       destination:
         #namespace: '{{metadata.annotations.metadata_aws_cluster_autoscaler_namespace}}'
         name: '{{name}}'
