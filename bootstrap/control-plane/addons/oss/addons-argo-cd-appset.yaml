@@ -19,14 +19,14 @@ spec:
                 addonChartRepository: https://argoproj.github.io/argo-helm
               selector:
                 matchExpressions:
-                - key: akuity.io/argo-cd-cluster-name
-                  operator: NotIn
-                  values:
-                    - in-cluster
-                - key: enable_argocd
-                  operator: In
-                  values:
-                    - 'true'
+                  - key: akuity.io/argo-cd-cluster-name
+                    operator: NotIn
+                    values:
+                      - in-cluster
+                  - key: enable_argocd
+                    operator: In
+                    values:
+                      - 'true'
           - clusters:
               selector:
                 matchLabels:
@@ -45,26 +45,26 @@ spec:
     spec:
       project: default
       sources:
-      - repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
-        targetRevision: HEAD
-        ref: values
-      - chart: '{{values.addonChart}}'
-        repoURL: '{{values.addonChartRepository}}'
-        targetRevision: '{{values.addonChartVersion}}'
-        helm:
-          releaseName: '{{values.addonChart}}'
-          ignoreMissingValueFiles: true
-          valueFiles:
-          - $values/charts/addons/{{values.addonChart}}/values.yaml
-          - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
-          - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
-          values: |
-            configs:
-              secret:
-                argocdServerAdminPassword: {{metadata.annotations.metadata_argocd_password}}
-            server:
-              service:
-                type: "LoadBalancer"
+        - repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
+          targetRevision: HEAD
+          ref: values
+        - chart: '{{values.addonChart}}'
+          repoURL: '{{values.addonChartRepository}}'
+          targetRevision: '{{values.addonChartVersion}}'
+          helm:
+            releaseName: '{{values.addonChart}}'
+            ignoreMissingValueFiles: true
+            valueFiles:
+              - $values/charts/addons/{{values.addonChart}}/values.yaml
+              - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
+              - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
+            values: |
+              configs:
+                secret:
+                  argocdServerAdminPassword: {{metadata.annotations.argocd_password}}
+              server:
+                service:
+                  type: "LoadBalancer"
 
       destination:
         namespace: '{{values.addonChartRepositoryNamespace}}'
@@ -74,4 +74,4 @@ spec:
           prune: false
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply=true  # Big CRDs.
+          - ServerSideApply=true # Big CRDs.
