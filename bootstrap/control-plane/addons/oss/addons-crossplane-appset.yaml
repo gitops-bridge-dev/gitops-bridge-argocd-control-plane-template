@@ -15,7 +15,7 @@ spec:
                 addonChart: crossplane
                 addonChartNamespace: crossplane-system
                 # anything not staging or prod use this version
-                addonChartVersion: '1.12.2'
+                addonChartVersion: '1.13.2'
                 addonChartRepository: https://charts.crossplane.io/stable
               selector:
                 matchExpressions:
@@ -32,20 +32,20 @@ spec:
                 matchLabels:
                   environment: staging
               values:
-                addonChartVersion: '1.12.2'
+                addonChartVersion: '1.13.2'
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: '1.12.2'
+                addonChartVersion: '1.13.2'
   template:
     metadata:
       name: 'addon-{{name}}-{{values.addonChart}}'
     spec:
       project: default
       sources:
-      - repoURL: 'https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template'
+      - repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
         targetRevision: HEAD
         ref: values
       - chart: '{{values.addonChart}}'
@@ -58,11 +58,7 @@ spec:
           - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
           - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
           - $values/charts/addons/{{values.addonChart}}/values.yaml
-          values: |
-            controller:
-              serviceAccount:
-                annotations:
-                  eks.amazonaws.com/role-arn: "{{metadata.annotations.metadata_aws_argocd_iam_role_arn}}"
+          #values: |
           #fileParameters:
           #  - name:
           #    path:
@@ -76,3 +72,10 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true  # Big CRDs.
+      ignoreDifferences:
+      - kind: Deployment
+        group: apps
+        jqPathExpressions:
+        - .spec.template.spec.containers[].env[].valueFrom.resourceFieldRef.divisor
+        - .spec.template.spec.initContainers[].env[].valueFrom.resourceFieldRef.divisor
+

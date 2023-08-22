@@ -14,7 +14,7 @@ spec:
               values:
                 addonChart: kube-prometheus-stack
                 # anything not staging or prod use this version
-                addonChartVersion: '46.6.0'
+                addonChartVersion: '48.3.2'
                 addonChartRepository: https://prometheus-community.github.io/helm-charts
               selector:
                 matchExpressions:
@@ -31,20 +31,20 @@ spec:
                 matchLabels:
                   environment: staging
               values:
-                addonChartVersion: '46.6.0'
+                addonChartVersion: '48.3.2'
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: '46.6.0'
+                addonChartVersion: '48.3.2'
   template:
     metadata:
       name: 'addon-{{name}}-{{values.addonChart}}'
     spec:
       project: default
       sources:
-      - repoURL: 'https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template'
+      - repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
         targetRevision: HEAD
         ref: values
       - chart: '{{values.addonChart}}'

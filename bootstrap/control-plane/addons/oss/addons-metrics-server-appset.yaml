@@ -15,7 +15,7 @@ spec:
                 addonChart: metrics-server
                 addonChartNamespace: kube-system
                 # anything not staging or prod use this version
-                addonChartVersion: '3.10.0'
+                addonChartVersion: '3.11.0'
                 addonChartRepository: https://kubernetes-sigs.github.io/metrics-server
               selector:
                 matchExpressions:
@@ -32,20 +32,20 @@ spec:
                 matchLabels:
                   environment: staging
               values:
-                addonChartVersion: '3.10.0'
+                addonChartVersion: '3.11.0'
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: '3.10.0'
+                addonChartVersion: '3.11.0'
   template:
     metadata:
       name: 'addon-{{name}}-{{values.addonChart}}'
     spec:
       project: default
       sources:
-      - repoURL: 'https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template'
+      - repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
         targetRevision: HEAD
         ref: values
       - chart: '{{values.addonChart}}'
