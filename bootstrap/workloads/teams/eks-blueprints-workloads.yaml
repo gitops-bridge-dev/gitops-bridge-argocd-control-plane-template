@@ -9,9 +9,9 @@ spec:
     - matrix:
         generators:
           - git:
-              repoURL: git@github.com:seb-tmp/eks-blueprints-workloads
+              repoURL: 'git@github.com:seb-tmp/eks-blueprints-workloads'
               #repoURL: https://github.com/seb-demo/eks-blueprints-workloads
-              revision: main
+              revision: 'main'
               directories:
                 - path: 'envs/dev/*'
           - clusters:
@@ -31,12 +31,8 @@ spec:
           targetRevision: '{{metadata.annotations.workload_repo_revision}}'
           ref: values
           path: '{{metadata.annotations.workload_repo_path}}'
-          # - chart: '{{values.addonChart}}'
-          #   repoURL: '{{values.addonChartRepository}}'
-          #   targetRevision: '{{values.addonChartVersion}}'
           helm:
-            #releaseName: '{{values.addonChart}}'
-            releaseName: 'workloads'
+            releaseName: 'workload-{{name}}'
             ignoreMissingValueFiles: true
             valueFiles:
               - $values/charts/addons/{{values.addonChart}}/values.yaml
@@ -54,9 +50,9 @@ spec:
                 "clusterName": "{{metadata.annotations.cluster_name}}"
                 "env": "{{metadata.annotations.env}}"
                 "ingress":
-                  "argocd_route53_weight": "{{metadata.annotations.env}}"
+                  "argocd_route53_weight": "{{metadata.annotations.argocd_route53_weight}}"
                   #"host": "{{metadata.annotations.cluster_name}}.sallaman.people.aws.dev"
-                  "route53_weight": "{{metadata.annotations.reoute53_weight}}"
+                  "route53_weight": "{{metadata.annotations.route53_weight}}"
                   "type": "alb"
                 "karpenterInstanceProfile": "{{metadata.annotations.karpenter_node_instance_profile_name}}"
                 "source":
