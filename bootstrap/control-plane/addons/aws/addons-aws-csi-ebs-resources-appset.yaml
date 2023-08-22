@@ -11,14 +11,14 @@ spec:
           addonChart: aws-ebs-csi
         selector:
           matchExpressions:
-          - key: akuity.io/argo-cd-cluster-name
-            operator: NotIn
-            values:
-              - in-cluster
-          - key: enable_aws_ebs_csi_resources
-            operator: In
-            values:
-              - 'true'
+            - key: akuity.io/argo-cd-cluster-name
+              operator: NotIn
+              values:
+                - in-cluster
+            - key: enable_aws_ebs_csi_resources
+              operator: In
+              values:
+                - 'true'
   template:
     metadata:
       name: 'addon-{{name}}-{{values.addonChart}}-resources'
@@ -30,9 +30,10 @@ spec:
         path: charts/addons/{{values.addonChart}}/resources
         helm:
           ignoreMissingValueFiles: true
+          releaseName: aws-ebs-csi-resources
           valueFiles:
-          - ../../../../environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/resources/values.yaml
-          - ../../../../clusters/{{name}}/addons/{{values.addonChart}}/resources/values.yaml
+            - ../../../../environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/resources/values.yaml
+            - ../../../../clusters/{{name}}/addons/{{values.addonChart}}/resources/values.yaml
           #values:
           #fileParameters:
           #  - name:
@@ -47,4 +48,4 @@ spec:
         automated: {}
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply=true  # Big CRDs.
+          - ServerSideApply=true # Big CRDs.
