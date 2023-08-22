@@ -11,7 +11,7 @@ spec:
           - git:
               repoURL: git@github.com:seb-tmp/eks-blueprints-workloads
               #repoURL: https://github.com/seb-demo/eks-blueprints-workloads
-              revision: working_eks_blue
+              revision: main
               directories:
                 - path: 'envs/dev/*'
           - clusters:
