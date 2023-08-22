@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: workloads
+  name: bootstrap-workloads
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
@@ -9,13 +9,11 @@ spec:
     - matrix:
         generators:
           - git:
-              repoURL: https://github.com/seb-demo/eks-blueprints-workloads
+              repoURL: git@github.com:seb-demo/eks-blueprints-workloads
+              #repoURL: https://github.com/seb-demo/eks-blueprints-workloads
               revision: working_eks_blue
-              ssh_key_secret_name: github-blueprint-ssh-key
               directories:
                 - path: 'envs/dev/*'
-              # - path: teams/USERNAME
-              #   exclude: true
           - clusters:
               selector:
                 matchExpressions:
@@ -29,11 +27,10 @@ spec:
     spec:
       project: default
       sources:
-        - repoURL: 'https://github.com/seb-demo/eks-blueprints-workloads'
-          targetRevision: working_eks_blue
-          ssh_key_secret_name: github-blueprint-ssh-key
+        - repoURL: '{{metadata.annotations.workload_repo_url}}'
+          targetRevision: '{{metadata.annotations.workload_repo_revision}}'
           ref: values
-          path: 'envs/dev/'
+          path: '{{metadata.annotations.workload_repo_path}}'
           # - chart: '{{values.addonChart}}'
           #   repoURL: '{{values.addonChartRepository}}'
           #   targetRevision: '{{values.addonChartVersion}}'
@@ -46,28 +43,25 @@ spec:
               - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
             values: |
-              "account": "{{metadata.annotations.metadata_aws_account_id}}"
+              "account": "{{metadata.annotations.aws_account_id}}"
               "clusterName": "{{metadata.annotations.cluster_name}}"
               "labels":
-                "env": "eks-blueprint-workshop-blue"
-                "myapp": "myvalue"
-              "region": "eu-west-1"
-              "repoUrl": "git@github.com:seb-demo/eks-blueprints-workloads.git"
+                "env": "{{metadata.annotations.env}}"
+              "region": "{{metadata.annotations.aws_region}}"
+              "repoUrl": "{{metadata.annotations.workload_repo_url}}"
               "spec":
                 "blueprint": "terraform"
                 "clusterName": "{{metadata.annotations.cluster_name}}"
-                "env": "dev"
+                "env": "{{metadata.annotations.env}}"
                 "ingress":
-                  "argocd_route53_weight": "100"
+                  "argocd_route53_weight": "{{metadata.annotations.env}}"
                   #"host": "{{metadata.annotations.cluster_name}}.sallaman.people.aws.dev"
-                  "route53_weight": "100"
+                  "route53_weight": "{{metadata.annotations.reoute53_weight}}"
                   "type": "alb"
                 "karpenterInstanceProfile": "{{metadata.annotations.karpenter_node_instance_profile_name}}"
                 "source":
-                  #"repoURL": "git@github.com:seb-demo/eks-blueprints-workloads.git"
-                  "repoURL": "https://github.com/seb-demo/eks-blueprints-workloads"
-                  "targetRevision": "working_eks_blue"
-                  "ssh_key_secret_name": "{{metadata.annotations.aws_secret_manager_workload_secret_name}}"
+                  "repoURL": "{{metadata.annotations.workload_repo_url}}"
+                  "targetRevision": "{{metadata.annotations.workload_repo_revision}}"
       destination:
         #namespace: '{{metadata.annotations.metadata_aws_cluster_autoscaler_namespace}}'
         name: '{{name}}'
