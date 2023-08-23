@@ -47,7 +47,7 @@ spec:
       sources:
       - repoURL: '{{metadata.annotations.gitops_bridge_repo_url}}'
         targetRevision: '{{metadata.annotations.gitops_bridge_repo_revision}}'
-          ref: values
+        ref: values
         - chart: '{{values.addonChart}}'
           repoURL: '{{values.addonChartRepository}}'
           targetRevision: '{{values.addonChartVersion}}'
