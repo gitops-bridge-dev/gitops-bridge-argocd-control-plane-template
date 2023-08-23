@@ -3,7 +3,7 @@ gp2:
   annotations:
     storageclass.kubernetes.io/is-default-class: "false"
   parameters:
-    fsType: ext4
+    csi.storage.k8s.io/fsType: ext4
     type: gp2
   spec:
     provisioner: kubernetes.io/aws-ebs
@@ -14,7 +14,7 @@ gp3:
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
   parameters:
-    fsType: ext4
+    csi.storage.k8s.io/fsType: ext4
     type: gp3
     encrypted: "true"
   spec:
