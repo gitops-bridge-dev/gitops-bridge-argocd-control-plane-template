@@ -25,7 +25,7 @@ spec:
     spec:
       project: default
       source:
-      - repoURL: '{{metadata.annotations.gitops_bridge_repo_url}}'
+        repoURL: '{{metadata.annotations.gitops_bridge_repo_url}}'
         targetRevision: '{{metadata.annotations.gitops_bridge_repo_revision}}'
         path: charts/addons/{{values.addonChart}}/resources
         helm:

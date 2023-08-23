@@ -11,28 +11,28 @@ spec:
           addonChart: fargate-fluentbit
         selector:
           matchExpressions:
-          - key: akuity.io/argo-cd-cluster-name
-            operator: NotIn
-            values:
-              - in-cluster
-          - key: enable_fargate_fluentbit
-            operator: In
-            values:
-              - 'true'
+            - key: akuity.io/argo-cd-cluster-name
+              operator: NotIn
+              values:
+                - in-cluster
+            - key: enable_fargate_fluentbit
+              operator: In
+              values:
+                - 'true'
   template:
     metadata:
       name: 'addon-{{name}}-{{values.addonChart}}-resources'
     spec:
       project: default
       source:
-      - repoURL: '{{metadata.annotations.gitops_bridge_repo_url}}'
+        repoURL: '{{metadata.annotations.gitops_bridge_repo_url}}'
         targetRevision: '{{metadata.annotations.gitops_bridge_repo_revision}}'
         path: charts/addons/{{values.addonChart}}/resources
         helm:
           ignoreMissingValueFiles: true
           valueFiles:
-          - ../../../../environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/resources/values.yaml
-          - ../../../../clusters/{{name}}/addons/{{values.addonChart}}/resources/values.yaml
+            - ../../../../environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/resources/values.yaml
+            - ../../../../clusters/{{name}}/addons/{{values.addonChart}}/resources/values.yaml
           values: |
             region: {{metadata.annotations.aws_region}}
             log_group_name: {{metadata.annotations.fargate_fluentbit_log_group_name}}
@@ -50,4 +50,4 @@ spec:
         automated: {}
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply=true  # Big CRDs.
+          - ServerSideApply=true # Big CRDs.
