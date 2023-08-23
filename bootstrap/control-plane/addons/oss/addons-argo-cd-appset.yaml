@@ -45,9 +45,9 @@ spec:
     spec:
       project: default
       sources:
-      - repoURL: '{{metadata.annotations.gitops_bridge_repo_url}}'
-        targetRevision: '{{metadata.annotations.gitops_bridge_repo_revision}}'
-        ref: values
+        - repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
+          targetRevision: HEAD
+          ref: values
         - chart: '{{values.addonChart}}'
           repoURL: '{{values.addonChartRepository}}'
           targetRevision: '{{values.addonChartVersion}}'
