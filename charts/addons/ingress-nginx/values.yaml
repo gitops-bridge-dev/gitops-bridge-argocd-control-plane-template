@@ -1,0 +1,27 @@
+# Helm chart values
+controller:
+  replicaCount: 3
+  service:
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+      service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+      service.beta.kubernetes.io/aws-load-balancer-security-groups: ${aws_security_group.ingress_nginx_external.id}
+      service.beta.kubernetes.io/aws-load-balancer-manage-backend-security-group-rules: true
+    loadBalancerClass: service.k8s.aws/nlb
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: topology.kubernetes.io/zone
+      whenUnsatisfiable: ScheduleAnyway
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/instance: ingress-nginx-external
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: ScheduleAnyway
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/instance: ingress-nginx-external
+  minAvailable: 2
+  ingressClassResource:
+    name: ingress-nginx-external
+    default: false
