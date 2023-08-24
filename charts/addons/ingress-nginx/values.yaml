@@ -14,14 +14,14 @@ controller:
       whenUnsatisfiable: ScheduleAnyway
       labelSelector:
         matchLabels:
-          app.kubernetes.io/instance: ingress-nginx-external
+          app.kubernetes.io/instance: ingress-nginx
     - maxSkew: 1
       topologyKey: kubernetes.io/hostname
       whenUnsatisfiable: ScheduleAnyway
       labelSelector:
         matchLabels:
-          app.kubernetes.io/instance: ingress-nginx-external
+          app.kubernetes.io/instance: ingress-nginx
   minAvailable: 2
   ingressClassResource:
-    name: ingress-nginx-external
+    name: ingress-nginx
     default: false
