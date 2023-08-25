@@ -29,6 +29,7 @@ spec:
         targetRevision: '{{metadata.annotations.gitops_bridge_repo_revision}}'
         path: charts/addons/{{values.addonChart}}/resources
         helm:
+          releaseName: '{{values.addonChart}}'
           ignoreMissingValueFiles: true
           releaseName: aws-ebs-csi-resources
           valueFiles:

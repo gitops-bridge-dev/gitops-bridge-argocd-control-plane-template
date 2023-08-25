@@ -2,7 +2,10 @@
 controller:
   replicaCount: 3
   service:
+    #1. don't create Loa Balancer becaust we are using existing LB with targetgroupbinding
     type: ClusterIP
+    #2. Else you can uncomment below section to create a NLB to expose nginx
+    #type: LoadBalancer
     # annotations:
     #   service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
     #   service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
