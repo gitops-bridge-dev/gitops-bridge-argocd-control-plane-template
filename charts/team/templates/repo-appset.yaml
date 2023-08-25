@@ -13,16 +13,14 @@ spec:
       repoURL: 'https://github.com/{{ $.Values.githubOrg | default $.Release.Name }}/{{ . }}'
       revision: HEAD
       directories:
-        - path: {{ $.Values.path }}
+        - path: env/*
   template:
     metadata:
-      #name: {{ $.Values.cluster }}-{{ $.Release.Name }}-{{ . | trimSuffix "-deploy" }}-{{ "{{" }}path.basename{{ "}}" }}
-      name: 'team-{{ $.Release.Name }}'
+      name: {{ $.Values.cluster }}-{{ $.Release.Name }}-{{ . | trimSuffix "-deploy" }}-{{ "{{" }}path.basename{{ "}}" }}
       # annotations:
       #   notifications.argoproj.io/subscribe.on-deployed.github: ""
     spec:
-      #project: {{ $.Values.cluster }}-{{ $.Release.Name }}
-      project: default
+      project: {{ $.Values.cluster }}-{{ $.Release.Name }}
       source:
         repoURL: 'https://github.com/{{ $.Values.githubOrg | default $.Release.Name }}/{{ . }}'
         targetRevision: 'HEAD'
@@ -32,8 +30,7 @@ spec:
         # path: './'
       destination:
         name: '{{ $.Values.cluster }}'
-        #namespace: '{{ $.Release.Name }}-{{ "{{" }}path.basename{{ "}}" }}'
-        namespace: 'team-{{ $.Release.Name }}'
+        namespace: '{{ $.Release.Name }}-{{ "{{" }}path.basename{{ "}}" }}'
       syncPolicy:
         automated: {}
 {{- end }}
