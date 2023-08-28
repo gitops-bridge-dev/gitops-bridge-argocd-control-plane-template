@@ -34,9 +34,11 @@ spec:
           - '../../{{path}}/values.yaml'
           values: |
             cluster: '{{name}}'
-        repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
+            repoURL: '{{metadata.annotations.gitops_bridge_repo_url}}'
+            targetRevision: '{{metadata.annotations.gitops_bridge_repo_revision}}'
+        repoURL: '{{metadata.annotations.gitops_bridge_repo_url}}'
+        targetRevision: '{{metadata.annotations.gitops_bridge_repo_revision}}'
         path: charts/team
-        targetRevision: HEAD
       destination:
         namespace: 'argocd'
         server: https://kubernetes.default.svc

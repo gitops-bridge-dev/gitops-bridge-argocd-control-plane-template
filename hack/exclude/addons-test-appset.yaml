@@ -26,9 +26,9 @@ spec:
               serviceAccount:
                 annotations:
                   eks.amazonaws.com/role-arn: {{metadata.annotations.aws_cluster_name}}
-        repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
+        repoURL: '{{metadata.annotations.gitops_bridge_repo_url}}'
+        targetRevision: '{{metadata.annotations.gitops_bridge_repo_revision}}'
         path: charts/{{addonChart}}
-        targetRevision: HEAD
       destination:
         namespace: '{{addonChart}}'
         name: '{{name}}'

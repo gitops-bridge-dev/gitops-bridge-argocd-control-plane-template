@@ -17,8 +17,8 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
-        targetRevision: HEAD
+        repoURL: '{{metadata.annotations.gitops_bridge_repo_url}}'
+        targetRevision: '{{metadata.annotations.gitops_bridge_repo_revision}}'
         path: 'clusters/{{name}}'
         directory:
           recurse: true
