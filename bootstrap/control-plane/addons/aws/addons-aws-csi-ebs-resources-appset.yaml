@@ -1,3 +1,4 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -11,17 +12,15 @@ spec:
           addonChart: aws-ebs-csi
         selector:
           matchExpressions:
-          - key: akuity.io/argo-cd-cluster-name
-            operator: NotIn
-            values:
-              - in-cluster
-          - key: enable_aws_ebs_csi_resources
-            operator: In
-            values:
-              - 'true'
+            - key: akuity.io/argo-cd-cluster-name
+              operator: NotIn
+              values: [in-cluster]
+            - key: enable_aws_ebs_csi_resources
+              operator: In
+              values: ['true']
   template:
     metadata:
-      name: 'addon-{{name}}-{{values.addonChart}}-resources'
+      name: addon-{{name}}-{{values.addonChart}}-resources
     spec:
       project: default
       source:
@@ -32,17 +31,17 @@ spec:
           releaseName: '{{values.addonChart}}'
           ignoreMissingValueFiles: true
           valueFiles:
-          - ../../../../environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/resources/values.yaml
-          - ../../../../clusters/{{name}}/addons/{{values.addonChart}}/resources/values.yaml
-          #values:
-          #fileParameters:
+            - ../../../../environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/resources/values.yaml
+            - ../../../../clusters/{{name}}/addons/{{values.addonChart}}/resources/values.yaml
+          # values:
+          # fileParameters:
           #  - name:
           #    path:
-          #parameters
-          #values
-          #valuesObject
+          # parameters
+          # values
+          # valuesObject
       destination:
-        #namespace: '{{values.addonChart}}'
+        # namespace: '{{values.addonChart}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}
