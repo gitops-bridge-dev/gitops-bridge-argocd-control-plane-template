@@ -1,3 +1,4 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -8,20 +9,19 @@ spec:
   generators:
     - matrix:
         generators:
-        - git:
-            repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
-            revision: HEAD
-            directories:
-            - path: "teams/workloads/*"
-            - path: teams/USERNAME
-              exclude: true
-        - clusters:
-            selector:
-              matchExpressions:
-              - key: akuity.io/argo-cd-cluster-name
-                operator: NotIn
-                values:
-                  - in-cluster
+          - git:
+              repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
+              revision: HEAD
+              directories:
+                - path: teams/workloads/*
+                - path: teams/USERNAME
+                  exclude: true
+          - clusters:
+              selector:
+                matchExpressions:
+                  - key: akuity.io/argo-cd-cluster-name
+                    operator: NotIn
+                    values: [in-cluster]
   template:
     metadata:
       name: '{{name}}-team-{{path.basename}}'
@@ -30,8 +30,7 @@ spec:
       source:
         helm:
           releaseName: '{{path.basename}}'
-          valueFiles:
-          - '../../{{path}}/values.yaml'
+          valueFiles: ['../../{{path}}/values.yaml']
           values: |
             cluster: '{{name}}'
             repoURL: '{{metadata.annotations.gitops_bridge_repo_url}}'
@@ -40,7 +39,7 @@ spec:
         targetRevision: '{{metadata.annotations.gitops_bridge_repo_revision}}'
         path: charts/team
       destination:
-        namespace: 'argocd'
+        namespace: argocd
         server: https://kubernetes.default.svc
       syncPolicy:
         automated:

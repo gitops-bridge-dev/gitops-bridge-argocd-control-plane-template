@@ -1,25 +1,25 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: clusters
 spec:
   generators:
-  - clusters:
-      selector:
-        matchExpressions:
-        - key: akuity.io/argo-cd-cluster-name
-          operator: NotIn
-          values:
-            - in-cluster
+    - clusters:
+        selector:
+          matchExpressions:
+            - key: akuity.io/argo-cd-cluster-name
+              operator: NotIn
+              values: [in-cluster]
   template:
     metadata:
-      name: 'cluster-{{name}}'
+      name: cluster-{{name}}
     spec:
       project: default
       source:
         repoURL: '{{metadata.annotations.gitops_bridge_repo_url}}'
         targetRevision: '{{metadata.annotations.gitops_bridge_repo_revision}}'
-        path: 'clusters/{{name}}'
+        path: clusters/{{name}}
         directory:
           recurse: true
           exclude: addons/*
