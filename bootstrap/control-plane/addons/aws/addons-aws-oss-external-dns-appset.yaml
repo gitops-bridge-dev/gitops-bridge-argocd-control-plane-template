@@ -70,11 +70,11 @@ spec:
               txtOwnerId: {{.metadata.annotations.aws_cluster_name}}
               #policy: {{default "upsert-only"  .metadata.annotations.external_dns_policy}}
               policy: |
-                {{- with index .metadata.annotations "external_dns_policy" | jsonify }}
-                {{ . }}
+                {{- if index .metadata.annotations "external_dns_policy" }}
+                {{ index .metadata.annotations "external_dns_policy" }}
                 {{- else }}
                 "upsert-only"
-                {{- end }}            
+                {{- end }}
       destination:
         namespace: '{{.metadata.annotations.external_dns_namespace}}'
         name: '{{.name}}'
