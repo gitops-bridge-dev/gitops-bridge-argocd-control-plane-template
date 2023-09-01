@@ -68,7 +68,13 @@ spec:
               domainFilters: 
                 - {{.metadata.annotations.eks_cluster_domain}}
               txtOwnerId: {{.metadata.annotations.aws_cluster_name}}
-              policy: {{default "upsert"  .metadata.annotations.external_dns_policy}}
+              #policy: {{default "upsert-only"  .metadata.annotations.external_dns_policy}}
+              policy: |
+                {{- with .metadata.annotations.external_dns_policy }}
+                {{ . }}
+                {{- else }}
+                upsert-only
+                {{- end }}              
       destination:
         namespace: '{{.metadata.annotations.external_dns_namespace}}'
         name: '{{.name}}'
