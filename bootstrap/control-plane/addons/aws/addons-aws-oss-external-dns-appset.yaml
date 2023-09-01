@@ -72,7 +72,7 @@ spec:
 
               policy: |
                 {{- if index .metadata.annotations "external_dns_policy" }}
-                "sync"
+                {{ .metadata.annotations.external_dns_policy }}
                 {{- else }}
                 "upsert-only"
                 {{- end }}
