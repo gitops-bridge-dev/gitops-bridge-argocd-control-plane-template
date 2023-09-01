@@ -1,9 +1,9 @@
 gp2:
   enabled: true
   annotations:
-    storageclass.kubernetes.io/is-default-class: "false"
+    storageclass.kubernetes.io/is-default-class: 'false'
   parameters:
-    csi.storage.k8s.io/fsType: ext4
+    fsType: ext4
     type: gp2
   spec:
     provisioner: kubernetes.io/aws-ebs
@@ -12,11 +12,11 @@ gp2:
 gp3:
   enabled: true
   annotations:
-    storageclass.kubernetes.io/is-default-class: "true"
+    storageclass.kubernetes.io/is-default-class: 'true'
   parameters:
-    csi.storage.k8s.io/fsType: ext4
+    fsType: ext4
     type: gp3
-    encrypted: "true"
+    encrypted: 'true'
   spec:
     provisioner: ebs.csi.aws.com
     reclaimPolicy: Delete
