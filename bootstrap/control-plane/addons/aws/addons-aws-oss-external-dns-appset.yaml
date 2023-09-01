@@ -64,6 +64,8 @@ spec:
               annotations:
                 eks.amazonaws.com/role-arn: {{metadata.annotations.external_dns_iam_role_arn}}
             domainFilters: {{metadata.annotations.external_dns_domain_filters}}
+            txtOwnerId: {{metadata.annotations.external_dns_txt_owner_id}}
+            policy: {{metadata.annotations.external_dns_policy}}
       destination:
         namespace: '{{metadata.annotations.external_dns_namespace}}'
         name: '{{name}}'
