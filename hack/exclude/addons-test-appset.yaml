@@ -26,8 +26,8 @@ spec:
               serviceAccount:
                 annotations:
                   eks.amazonaws.com/role-arn: {{metadata.annotations.aws_cluster_name}}
-        repoURL: '{{metadata.annotations.gitops_bridge_repo_url}}'
-        targetRevision: '{{metadata.annotations.gitops_bridge_repo_revision}}'
+        repoURL: '{{metadata.annotations.addons_repo_url}}'
+        targetRevision: '{{metadata.annotations.addons_repo_revision}}'
         path: charts/{{addonChart}}
       destination:
         namespace: '{{addonChart}}'
