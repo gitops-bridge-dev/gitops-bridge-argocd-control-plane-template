@@ -42,8 +42,8 @@ spec:
     spec:
       project: default
       sources:
-        - repoURL: '{{metadata.annotations.gitops_bridge_repo_url}}'
-          targetRevision: '{{metadata.annotations.gitops_bridge_repo_revision}}'
+        - repoURL: '{{metadata.annotations.addons_repo_url}}'
+          targetRevision: '{{metadata.annotations.addons_repo_revision}}'
           ref: values
         - chart: '{{values.addonChart}}'
           repoURL: '{{values.addonChartRepository}}'
@@ -52,9 +52,9 @@ spec:
             releaseName: '{{values.addonChart}}'
             ignoreMissingValueFiles: true
             valueFiles:
-              - $values/charts/addons/{{values.addonChart}}/values.yaml
-              - $values/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
-              - $values/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
+              - $values{{metadata.annotations.addons_repo_basepath}}/charts/addons/{{values.addonChart}}/values.yaml
+              - $values{{metadata.annotations.addons_repo_basepath}}/environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
+              - $values{{metadata.annotations.addons_repo_basepath}}/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
             values: |
               clusterName: {{metadata.annotations.aws_cluster_name}}
               serviceAccount:
