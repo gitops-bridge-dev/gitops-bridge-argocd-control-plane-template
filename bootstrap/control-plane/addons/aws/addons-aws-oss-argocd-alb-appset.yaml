@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-aws-argocd-ingress
+  name: addons-aws-argocd-alb
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
@@ -15,13 +15,14 @@ spec:
                 addonChart: argo-cd
                 # anything not staging or prod use this version
                 addonChartVersion: 5.45.0
+                addonChartRepositoryNamespace: argocd
                 addonChartRepository: https://argoproj.github.io/argo-helm
               selector:
                 matchExpressions:
                   - key: akuity.io/argo-cd-cluster-name
                     operator: NotIn
                     values: [in-cluster]
-                  - key: enable_aws_argocd
+                  - key: enable_argocd
                     operator: In
                     values: ['true']
                   - key: enable_aws_load_balancer_controller
@@ -87,7 +88,7 @@ spec:
                     serviceType: "ClusterIP"  # Instance mode needs type NodePort, IP mode needs type ClusterIP or NodePort
                     backendProtocolVersion: "GRPC"  # This tells AWS to send traffic from the ALB using HTTP2. Can use gRPC as well if you want to leverage gRPC specific features
       destination:
-        namespace: '{{metadata.annotations.argocd_namespace}}'
+        namespace: '{{values.addonChartRepositoryNamespace}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}

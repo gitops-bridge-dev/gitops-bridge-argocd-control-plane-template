@@ -1,3 +1,4 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -13,20 +14,18 @@ spec:
           matchExpressions:
             - key: akuity.io/argo-cd-cluster-name
               operator: NotIn
-              values:
-                - in-cluster
+              values: [in-cluster]
             - key: enable_fargate_fluentbit
               operator: In
-              values:
-                - 'true'
+              values: ['true']
   template:
     metadata:
-      name: 'addon-{{name}}-{{values.addonChart}}-resources'
+      name: addon-{{name}}-{{values.addonChart}}-resources
     spec:
       project: default
       source:
-        repoURL: '{{metadata.annotations.gitops_bridge_repo_url}}'
-        targetRevision: '{{metadata.annotations.gitops_bridge_repo_revision}}'
+        repoURL: '{{metadata.annotations.addons_repo_url}}'
+        targetRevision: '{{metadata.annotations.addons_repo_revision}}'
         path: charts/addons/{{values.addonChart}}/resources
         helm:
           releaseName: '{{values.addonChart}}'
@@ -38,14 +37,14 @@ spec:
             region: {{metadata.annotations.aws_region}}
             log_group_name: {{metadata.annotations.fargate_fluentbit_log_group_name}}
             log_stream_prefix: {{metadata.annotations.fargate_fluentbit_log_stream_prefix}}
-          #fileParameters:
+          # fileParameters:
           #  - name:
           #    path:
-          #parameters
-          #values
-          #valuesObject
+          # parameters
+          # values
+          # valuesObject
       destination:
-        #namespace: '{{values.addonChart}}'
+        # namespace: '{{values.addonChart}}'
         name: '{{name}}'
       syncPolicy:
         automated: {}
