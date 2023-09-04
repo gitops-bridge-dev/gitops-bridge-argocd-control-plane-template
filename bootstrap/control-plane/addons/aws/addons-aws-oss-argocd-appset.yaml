@@ -24,6 +24,8 @@ spec:
                   - key: enable_aws_argocd
                     operator: In
                     values: ['true']
+                  - key: enable_aws_load_balancer_controller
+                    operator: DoesNotExist
           - clusters:
               selector:
                 matchLabels:
