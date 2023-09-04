@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-aws-argocd
+  name: addons-aws-argocd-hub
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: true

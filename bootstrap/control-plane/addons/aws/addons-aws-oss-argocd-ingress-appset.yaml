@@ -24,8 +24,6 @@ spec:
                   - key: enable_aws_argocd_ingress
                     operator: In
                     values: ['true']
-                  - key: enable_aws_load_balancer_controller
-                    operator: Exists
           - clusters:
               selector:
                 matchLabels:
