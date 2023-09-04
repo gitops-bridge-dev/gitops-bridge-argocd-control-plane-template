@@ -21,7 +21,7 @@ spec:
                   - key: akuity.io/argo-cd-cluster-name
                     operator: NotIn
                     values: [in-cluster]
-                  - key: enable_argo_workflows
+                  - key: enable_argo_events
                     operator: In
                     values: ['true']
           - clusters:
