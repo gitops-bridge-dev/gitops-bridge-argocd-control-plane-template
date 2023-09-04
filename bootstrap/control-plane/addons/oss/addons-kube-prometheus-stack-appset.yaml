@@ -63,3 +63,4 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true  # Big CRDs.
+          - ApplyOutOfSyncOnly=true
