@@ -21,7 +21,7 @@ spec:
                   - key: akuity.io/argo-cd-cluster-name
                     operator: NotIn
                     values: [in-cluster]
-                  - key: enable_aws_argocd
+                  - key: enable_aws_argocd_ingress
                     operator: In
                     values: ['true']
                   - key: enable_aws_load_balancer_controller
@@ -93,4 +93,4 @@ spec:
         automated: {}
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply=true  # Big CRDs.
+          - ServerSideApply=true # Big CRDs.

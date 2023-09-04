@@ -78,9 +78,9 @@ spec:
                     alb.ingress.kubernetes.io/listen-ports: "[{\"HTTPS\":443}]"
                     alb.ingress.kubernetes.io/tags: "Environment=hub,GitOps=true"
                   ingressClassName: "alb"
-                  hosts: #{{metadata.annotations.argocd_hosts}}
+                  hosts: {{metadata.annotations.argocd_hosts}}
                   tls:
-                  - hosts: #{{metadata.annotations.argocd_hosts}}
+                  - hosts: {{metadata.annotations.argocd_hosts}}
                 ingressGrpc:
                   enabled: true
                   isAWSALB: true
