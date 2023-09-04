@@ -24,6 +24,8 @@ spec:
                   - key: enable_cert_manager
                     operator: In
                     values: ['true']
+                  - key: aws_cluster_name
+                    operator: Exists
           - clusters:
               selector:
                 matchLabels:
