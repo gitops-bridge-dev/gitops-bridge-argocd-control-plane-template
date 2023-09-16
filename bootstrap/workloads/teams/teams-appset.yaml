@@ -37,7 +37,7 @@ spec:
             targetRevision: '{{metadata.annotations.addons_repo_revision}}'
         repoURL: '{{metadata.annotations.addons_repo_url}}'
         targetRevision: '{{metadata.annotations.addons_repo_revision}}'
-        path: charts/team
+        path: '{{metadata.annotations.addons_repo_basepath}}charts/team'
       destination:
         namespace: argocd
         server: https://kubernetes.default.svc
