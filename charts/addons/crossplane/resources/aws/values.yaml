@@ -17,7 +17,7 @@ controllerConfig:
 provider:
   enabled: true
   metadata:
-    name: "aws-provider"
+    name: "provider-aws"
     iam_role_arn: null
     annotations: {}
     labels: {}
