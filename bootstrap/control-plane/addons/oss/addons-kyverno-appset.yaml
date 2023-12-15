@@ -61,21 +61,6 @@ spec:
           #    path:
           # parameters
           # valuesObject
-        - repoURL: '{{metadata.annotations.addons_repo_url}}'
-          targetRevision: '{{metadata.annotations.addons_repo_revision}}'
-          path: '{{metadata.annotations.addons_repo_basepath}}charts/addons/{{values.addonChart}}/resources'
-          helm:
-            ignoreMissingValueFiles: true
-            valueFiles:
-              - ../../../../environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/resources/values.yaml
-              - ../../../../clusters/{{name}}/addons/{{values.addonChart}}/resources/values.yaml
-          # values:
-          # fileParameters:
-          #  - name:
-          #    path:
-          # parameters
-          # values
-          # valuesObject
       destination:
         namespace: '{{values.addonChart}}'
         name: '{{name}}'
