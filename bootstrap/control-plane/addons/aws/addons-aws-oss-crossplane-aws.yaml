@@ -56,9 +56,9 @@ spec:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/{{values.addonChart}}/values.yaml
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
-          values: |
-            global:
-              iam_role_arn_aws: {{metadata.annotations.aws_crossplane_iam_role_arn}}
+            values: |
+              global:
+                iam_role_arn_aws: {{metadata.annotations.aws_crossplane_iam_role_arn}}
           # fileParameters:
           #  - name:
           #    path:

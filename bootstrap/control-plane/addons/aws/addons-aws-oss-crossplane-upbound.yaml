@@ -56,23 +56,23 @@ spec:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/{{values.addonChart}}/values.yaml
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
-          values: |
-            global:
-              enabled_aws_upbound: {{metadata.labels.enable_aws_crossplane_upbound_provider}}
-            providers:
-            - cloudfront
-            - cloudwatchlogs
-            - dynamodb
-            - ec2
-            - eks
-            - firehose
-            - iam
-            - kms
-            - lambda
-            - rds
-            - s3
-            - sns
-            - sqs
+            values: |
+              global:
+                enabled_aws_upbound: {{metadata.labels.enable_aws_crossplane_upbound_provider}}
+              providers:
+              - cloudfront
+              - cloudwatchlogs
+              - dynamodb
+              - ec2
+              - eks
+              - firehose
+              - iam
+              - kms
+              - lambda
+              - rds
+              - s3
+              - sns
+              - sqs
           # fileParameters:
           #  - name:
           #    path:
