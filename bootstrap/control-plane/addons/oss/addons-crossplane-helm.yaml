@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-crossplane-kubernetes
+  name: addons-crossplane-helm
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
@@ -12,7 +12,7 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: crossplane-kubernetes
+                addonChart: crossplane-helm
                 addonChartNamespace: crossplane-system
                 # anything not staging or prod use this version
                 addonChartVersion: 1.0.0
@@ -22,7 +22,7 @@ spec:
                   - key: akuity.io/argo-cd-cluster-name
                     operator: NotIn
                     values: [in-cluster]
-                  - key: enable_crossplane_kubernetes_provider
+                  - key: enable_crossplane_helm_provider
                     operator: In
                     values: ['true']
           - clusters:
