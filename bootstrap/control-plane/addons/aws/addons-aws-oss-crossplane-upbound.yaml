@@ -58,7 +58,7 @@ spec:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
             values: |
               global:
-                enabled_aws_upbound: {{metadata.labels.enable_aws_crossplane_upbound_provider}}
+                iam_role_arn_aws_upbound: {{metadata.annotations.aws_upbound_crossplane_iam_role_arn}}
               providers:
               - cloudfront
               - cloudwatchlogs
