@@ -2,17 +2,29 @@ global:
   iam_role_arn_aws: null
   enabled_aws: true
 
-controllerConfig:
+deploymentRuntimeConfig:
   enabled: true
   metadata:
-    name: "aws-controller-config"
+    name: "aws-runtime-config"
     annotations: {}
     labels: {}
   spec:
-    podSecurityContext:
-      fsGroup: 2000
-    args:
-      - --debug
+    deploymentTemplate:
+      spec:
+        selector: {}
+        template:
+          spec:
+            containers:
+              - name: package-runtime
+                args:
+                - --debug
+            securityContext:
+              fsGroup: 2000
+    serviceAccountTemplate:
+      metadata:
+        annotations: {}
+        labels: {}
+        name: provider-aws
 
 provider:
   enabled: true
@@ -23,7 +35,7 @@ provider:
     labels: {}
   package:
     registry: xpkg.upbound.io/crossplane-contrib/provider-aws
-    version: "v0.43.1"
+    version: "v0.45.2"
 
 providerConfig:
   enabled: true

@@ -1,7 +1,7 @@
-{{- if and .Values.global.enabled_helm .Values.controllerConfig.enabled }}
-{{- with .Values.controllerConfig }}
-apiVersion: pkg.crossplane.io/v1alpha1
-kind: ControllerConfig
+{{- if and .Values.global.enabled_kubernetes .Values.deploymentRuntimeConfig.enabled }}
+{{- with .Values.deploymentRuntimeConfig }}
+apiVersion: pkg.crossplane.io/v1beta1
+kind: DeploymentRuntimeConfig
 metadata:
   name: {{ .metadata.name }}
   annotations:
@@ -17,6 +17,9 @@ metadata:
     {{- end }}
   {{- end }}
 spec:
-  {{- .spec | toYaml | nindent 2 }}
+  serviceAccountTemplate:
+  {{- .spec.serviceAccountTemplate | toYaml | nindent 4 }}
+  deploymentTemplate:
+  {{- .spec.deploymentTemplate | toYaml | nindent 4 }}
 {{- end }}
 {{- end }}

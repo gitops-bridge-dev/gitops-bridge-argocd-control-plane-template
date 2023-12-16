@@ -1,14 +1,22 @@
 global:
   enabled_kubernetes: true
 
-controllerConfig:
+deploymentRuntimeConfig:
   enabled: true
   metadata:
-    name: "kubernetes-controller-config"
+    name: "kubernetes-runtime-config"
     annotations: {}
     labels: {}
   spec:
-    serviceAccountName: kubernetes-provider
+    deploymentTemplate:
+      spec:
+        selector: {}
+        template: {}
+    serviceAccountTemplate:
+      metadata:
+        annotations: {}
+        labels: {}
+        name: kubernetes-provider
 
 provider:
   enabled: true

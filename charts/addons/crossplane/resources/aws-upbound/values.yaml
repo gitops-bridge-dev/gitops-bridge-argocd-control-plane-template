@@ -1,21 +1,33 @@
 global:
   iam_role_arn_aws_upbound: null
   enabled_aws_upbound: true
-  aws_upbound_version: v0.41.0
+  aws_upbound_version: v0.46.0
   aws_upbound_registry: xpkg.upbound.io/upbound
 
-controllerConfig:
+deploymentRuntimeConfig:
   enabled: true
   metadata:
-    name: "upbound-aws-controller-config"
+    name: "upbound-aws-runtime-config"
     iam_role_arn: null
     annotations: {}
     labels: {}
   spec:
-    podSecurityContext:
-      fsGroup: 2000
-    args:
-      - --debug
+    deploymentTemplate:
+      spec:
+        selector: {}
+        template:
+          spec:
+            containers:
+              - name: package-runtime
+                args:
+                - --debug
+            securityContext:
+              fsGroup: 2000
+    serviceAccountTemplate:
+      metadata:
+        annotations: {}
+        labels: {}
+        name: provider-aws
 
 providerConfig:
   enabled: true

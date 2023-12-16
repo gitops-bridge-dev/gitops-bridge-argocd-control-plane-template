@@ -7,7 +7,7 @@ global:
   enabled_helm: true
 
 
-aws-upbound:
+crossplane-aws-upbound:
   providers:
   - cloudfront
   - cloudwatchlogs

@@ -1,5 +1,5 @@
 apiVersion: v2
-name: resources
+name: crossplane-aws-suite
 description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -24,15 +24,15 @@ version: 1.0.0
 appVersion: "1.0.0"
 
 dependencies:
-  - name: aws
+  - name: crossplane-aws
     version: "1.0.0"
     repository: "file://aws"
-  - name: kubernetes
+  - name: crossplane-kubernetes
     version: "1.0.0"
     repository: "file://kubernetes"
-  - name: helm
+  - name: crossplane-helm
     version: "1.0.0"
     repository: "file://helm"
-  - name: aws-upbound
+  - name: crossplane-aws-upbound
     version: "1.0.0"
     repository: "file://aws-upbound"

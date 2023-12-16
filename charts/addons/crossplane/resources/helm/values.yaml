@@ -1,14 +1,22 @@
 global:
   enabled_helm: true
 
-controllerConfig:
+deploymentRuntimeConfig:
   enabled: true
   metadata:
-    name: "helm-controller-config"
+    name: "helm-runtime-config"
     annotations: {}
     labels: {}
   spec:
-    serviceAccountName: helm-provider
+    deploymentTemplate:
+      spec:
+        selector: {}
+        template: {}
+    serviceAccountTemplate:
+      metadata:
+        annotations: {}
+        labels: {}
+        name: helm-provider
 
 provider:
   enabled: true
@@ -18,7 +26,7 @@ provider:
     labels: {}
   package:
     registry: xpkg.upbound.io/crossplane-contrib/provider-helm
-    version: "v0.15.0"
+    version: "v0.16.0"
 
 providerConfig:
   enabled: true

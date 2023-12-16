@@ -18,8 +18,10 @@ metadata:
   {{- end }}
 spec:
   package: {{ .package.registry }}:{{ default .package.version $.Values.global.helm_version }}
-  controllerConfigRef:
-    name: {{ $.Values.controllerConfig.metadata.name }}
+  runtimeConfigRef:
+    apiVersion: pkg.crossplane.io/v1beta1
+    kind: DeploymentRuntimeConfig
+    name: {{ $.Values.deploymentRuntimeConfig.metadata.name }}
 {{- end }}
 {{- end }}
 
