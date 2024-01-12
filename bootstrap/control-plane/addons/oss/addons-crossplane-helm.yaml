@@ -67,11 +67,7 @@ spec:
         name: '{{name}}'
       syncPolicy:
         retry:
-          limit: 20
-          backoff:
-            duration: 5s
-            factor: 2
-            maxDuration: 60m
+          limit: 100
         automated: {}
         syncOptions:
           - CreateNamespace=true
