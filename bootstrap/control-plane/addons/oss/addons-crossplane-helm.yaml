@@ -68,6 +68,10 @@ spec:
       syncPolicy:
         retry:
           limit: 100
+        backoff:
+          duration: 30s
+          factor: 2
+          maxDuration: 20m
         automated: {}
         syncOptions:
           - CreateNamespace=true
