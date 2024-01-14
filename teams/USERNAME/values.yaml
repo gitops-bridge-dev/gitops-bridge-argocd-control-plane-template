@@ -1,8 +1,0 @@
-email: <email>  # Replace with email found in User Info page in Argo CD.
-cluster: in-cluster
-namespaces:
-- dev
-- stage
-- prod
-repos:
-- demo-app-deploy

@@ -15,7 +15,7 @@ spec:
                 addonChart: crossplane
                 addonChartNamespace: crossplane-system
                 # anything not staging or prod use this version
-                addonChartVersion: 1.13.2
+                addonChartVersion: 1.14.5
                 addonChartRepository: https://charts.crossplane.io/stable
               selector:
                 matchExpressions:
@@ -30,13 +30,13 @@ spec:
                 matchLabels:
                   environment: staging
               values:
-                addonChartVersion: 1.13.2
+                addonChartVersion: 1.14.5
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 1.13.2
+                addonChartVersion: 1.14.5
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -53,9 +53,9 @@ spec:
             releaseName: '{{values.addonChart}}'
             ignoreMissingValueFiles: true
             valueFiles:
+              - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/{{values.addonChart}}/values.yaml
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
-              - $values/{{metadata.annotations.addons_repo_basepath}}clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
-              - $values/{{metadata.annotations.addons_repo_basepath}}charts/addons/{{values.addonChart}}/values.yaml
+              - $values/{{metadata.annotations.addons_repo_basepath}}environments/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
           # values: |
           # fileParameters:
           #  - name:

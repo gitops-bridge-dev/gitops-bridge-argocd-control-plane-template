@@ -1,8 +1,0 @@
-email: ""
-cluster: ""
-namespaces: []
-githubOrg: ""
-repos: []
-prefix: ""
-repoURL: https://github.com/gitops-bridge-dev/gitops-bridge-argocd-control-plane-template
-targetRevision: HEAD
