@@ -15,7 +15,7 @@ spec:
                 addonChart: crossplane-aws
                 addonChartNamespace: crossplane-system
                 # anything not staging or prod use this version
-                addonChartVersion: 1.0.0
+                addonChartVersion: 2.1.0
                 addonChartRepository: https://gitops-bridge-dev.github.io/gitops-bridge-helm-charts
               selector:
                 matchExpressions:
@@ -30,13 +30,13 @@ spec:
                 matchLabels:
                   environment: staging
               values:
-                addonChartVersion: 1.0.0
+                addonChartVersion: 2.1.0
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 1.0.0
+                addonChartVersion: 2.1.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -57,8 +57,13 @@ spec:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
             values: |
-              global:
-                iam_role_arn_aws: {{metadata.annotations.aws_crossplane_iam_role_arn}}
+              deploymentRuntimeConfig:
+                metadata:
+                  role_arn: {{metadata.annotations.aws_crossplane_iam_role_arn}}
+              provider:
+                package:
+                  registry: xpkg.upbound.io/crossplane-contrib/provider-aws
+                  version: "v0.46.0"
           # fileParameters:
           #  - name:
           #    path:

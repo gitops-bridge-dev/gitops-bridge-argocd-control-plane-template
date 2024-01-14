@@ -56,7 +56,11 @@ spec:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/{{values.addonChart}}/values.yaml
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
-          # values: |
+            values: |
+              provider:
+                package:
+                  registry: xpkg.upbound.io/crossplane-contrib/provider-kubernetes
+                  version: "v0.10.0"
           # fileParameters:
           #  - name:
           #    path:
