@@ -1,3 +1,12 @@
+## Globally shared configuration
+global:
+  # Default image used by all components
+  image:
+    # -- If defined, a repository applied to all Argo CD deployments
+    repository: 613110753423.dkr.ecr.ca-central-1.amazonaws.com/argocd
+    # -- Overrides the global Argo CD image tag whose default is the chart appVersion
+    tag: 20240117-1
+
 controller:
   replicas: 1 # Additional replicas will cause sharding of managed clusters across number of replicas.
   metrics:
