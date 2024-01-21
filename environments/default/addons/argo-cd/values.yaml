@@ -7,6 +7,14 @@ global:
     # -- Overrides the global Argo CD image tag whose default is the chart appVersion
     tag: 20240117-1
 
+    # environmentName: staging
+
+## Notifications controller
+notifications:
+  secret:
+    # -- Whether helm chart creates notifications controller secret
+    create: false
+
 controller:
   replicas: 1 # Additional replicas will cause sharding of managed clusters across number of replicas.
   metrics:
