@@ -14,6 +14,9 @@ notifications:
   secret:
     # -- Whether helm chart creates notifications controller secret
     create: false
+  notifiers:
+    service.slack: |
+      token: $slack-token
   triggers:
     trigger.on-sync-succeeded: |
       - description: Application syncing has succeeded
