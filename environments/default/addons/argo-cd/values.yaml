@@ -17,6 +17,8 @@ notifications:
   notifiers:
     service.slack: |
       token: $slack-token
+    service.awssqs: |
+      region: "us-west-2"
   triggers:
     trigger.on-sync-succeeded: |
       - description: Application syncing has succeeded
