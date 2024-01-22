@@ -14,7 +14,7 @@ notifications:
   secret:
     # -- Whether helm chart creates notifications controller secret
     create: false
-  trigger:
+  triggers:
     trigger.on-sync-succeeded: |
       - description: Application syncing has succeeded
         send:
