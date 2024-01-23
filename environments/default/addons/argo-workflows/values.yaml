@@ -9,8 +9,8 @@ workflow:
     # -- Specifies whether a service account should be created in namespaces controller.workflowNamespaces
     create: true
 server:
-  secure: false # WARNING: unsecure plain http, switch to true for production
-  authMode: "server" # WARNING: default is "client" needs auth token, "server" is open/no-authentication, and "sso" is to configure sso
+  #secure: false # WARNING: unsecure plain http, switch to true for production
+  #authMode: "server" # WARNING: default is "client" needs auth token, "server" is open/no-authentication, and "sso" is to configure sso
   extraEnv:
     - name: FIRST_TIME_USER_MODAL
       value: "false"
