@@ -1,7 +1,13 @@
 # Helm chart values
 controller:
+  workflowNamespaces:
+    - default
   metricsConfig:
     enabled: true
+workflow:
+  serviceAccount:
+    # -- Specifies whether a service account should be created in namespaces controller.workflowNamespaces
+    create: true
 server:
   secure: false # WARNING: unsecure plain http, switch to true for production
   authMode: "server" # WARNING: default is "client" needs auth token, "server" is open/no-authentication, and "sso" is to configure sso
