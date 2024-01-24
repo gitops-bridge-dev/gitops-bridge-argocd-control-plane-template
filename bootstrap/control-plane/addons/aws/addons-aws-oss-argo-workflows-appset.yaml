@@ -57,6 +57,7 @@ spec:
               - $values/{{.metadata.annotations.addons_repo_basepath}}environments/{{.metadata.labels.environment}}/addons/{{.values.addonChart}}/values.yaml
               - $values/{{.metadata.annotations.addons_repo_basepath}}clusters/{.{name}}/addons/{{.values.addonChart}}/values.yaml
             values: |
+              server:
                 serviceType: ClusterIP
                 servicePort: 2746
                 servicePortName: http
