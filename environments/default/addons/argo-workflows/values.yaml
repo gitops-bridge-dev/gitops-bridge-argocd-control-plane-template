@@ -9,8 +9,13 @@ workflow:
     # -- Specifies whether a service account should be created in namespaces controller.workflowNamespaces
     create: true
 server:
-  #secure: false # WARNING: unsecure plain http, switch to true for production
-  #authMode: "server" # WARNING: default is "client" needs auth token, "server" is open/no-authentication, and "sso" is to configure sso
+  # -- Run the argo server in "secure" mode. Configure this value instead of `--secure` in extraArgs.
+  ## See the following documentation for more details on secure mode:
+  ## https://argoproj.github.io/argo-workflows/tls/
+  secure: false
+  # -- A list of supported authentication modes. Available values are `server`, `client`, or `sso`. If you provide sso, please configure `.Values.server.sso` as well.
+  ## Ref: https://argoproj.github.io/argo-workflows/argo-server-auth-mode/
+  authModes: []
   extraEnv:
     - name: FIRST_TIME_USER_MODAL
       value: "false"
