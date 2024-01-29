@@ -56,6 +56,7 @@ spec:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/{{metadata.annotations.addons_repo_basepath}}clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
             values: |
+              vpcId: '{{metadata.annotations.aws_vpc_id}}'
               clusterName: {{metadata.annotations.aws_cluster_name}}
               serviceAccount:
                 name: {{metadata.annotations.aws_load_balancer_controller_service_account}}
