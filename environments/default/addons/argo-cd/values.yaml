@@ -209,7 +209,7 @@ extraObjects:
       name: default
       namespace: {{ $.Release.Namespace | quote }}
       annotations:
-        source: gitops-brige
+        source: gitops-bridge
     spec:
       clusterResourceWhitelist:
       - group: '*'
