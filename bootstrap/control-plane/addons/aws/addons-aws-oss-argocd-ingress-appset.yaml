@@ -15,7 +15,7 @@ spec:
               values:
                 addonChart: argo-cd
                 # anything not staging or prod use this version
-                addonChartVersion: 5.46.7
+                addonChartVersion: 6.6.0
                 addonChartRepository: https://argoproj.github.io/argo-helm
               selector:
                 matchExpressions:
@@ -30,13 +30,13 @@ spec:
                 matchLabels:
                   environment: staging
               values:
-                addonChartVersion: 5.46.7
+                addonChartVersion: 6.6.0
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 5.46.7
+                addonChartVersion: 6.6.0
   template:
     metadata:
       name: addon-{{.name}}-aws-{{.values.addonChart}}
@@ -57,32 +57,23 @@ spec:
               - $values/{{.metadata.annotations.addons_repo_basepath}}environments/{{.metadata.labels.environment}}/addons/{{.values.addonChart}}/values.yaml
               - $values/{{.metadata.annotations.addons_repo_basepath}}clusters/{{.name}}/addons/{{.values.addonChart}}/values.yaml
             values: |
-              controller:
-                serviceAccount:
-                  annotations:
-                    eks.amazonaws.com/role-arn: '{{.metadata.annotations.argocd_iam_role_arn}}'
+              global:
+                domain: {{.metadata.annotations.argocd_domain}}
               server:
-                serviceAccount:
-                  annotations:
-                    eks.amazonaws.com/role-arn: '{{.metadata.annotations.argocd_iam_role_arn}}'
                 service:
                   type: "ClusterIP"
                 ingress:
                   enabled: true
+                  controller: "aws"
+                  ingressClassName: "alb"
                   annotations:
                     alb.ingress.kubernetes.io/scheme: "internet-facing"
                     alb.ingress.kubernetes.io/target-type: "ip"
                     alb.ingress.kubernetes.io/backend-protocol: "HTTPS"
-                    alb.ingress.kubernetes.io/listen-ports: "[{\"HTTPS\":443}]"
+                    alb.ingress.kubernetes.io/listen-ports: "[{\"HTTP\":80},{\"HTTPS\":443}]"
+                    alb.ingress.kubernetes.io/ssl-redirect: "443"
                     alb.ingress.kubernetes.io/tags: "Environment=hub,GitOps=true"
-                  ingressClassName: "alb"
-                  hosts: {{.metadata.annotations.argocd_hosts}}
-                  tls:
-                  - hosts: {{.metadata.annotations.argocd_hosts}}
-                ingressGrpc:
-                  enabled: true
-                  isAWSALB: true
-                  awsALB:
+                  aws:
                     serviceType: "ClusterIP"  # Instance mode needs type NodePort, IP mode needs type ClusterIP or NodePort
                     backendProtocolVersion: "GRPC"  # This tells AWS to send traffic from the ALB using HTTP2. Can use gRPC as well if you want to leverage gRPC specific features
       destination:
