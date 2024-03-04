@@ -14,7 +14,7 @@ spec:
               values:
                 addonChart: aws-fsx-csi-driver
                 # anything not staging or prod use this version
-                addonChartVersion: 1.7.0
+                addonChartVersion: 1.9.0
                 addonChartRepository: https://kubernetes-sigs.github.io/aws-fsx-csi-driver
               selector:
                 matchExpressions:
@@ -29,13 +29,13 @@ spec:
                 matchLabels:
                   environment: staging
               values:
-                addonChartVersion: 1.7.0
+                addonChartVersion: 1.9.0
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 1.7.0
+                addonChartVersion: 1.9.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}

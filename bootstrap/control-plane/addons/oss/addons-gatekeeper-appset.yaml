@@ -15,7 +15,7 @@ spec:
                 addonChart: gatekeeper
                 addonChartNamespace: gatekeeper-system
                 # anything not staging or prod use this version
-                addonChartVersion: 3.13.0
+                addonChartVersion: 3.15.0
                 addonChartRepository: https://open-policy-agent.github.io/gatekeeper/charts
               selector:
                 matchExpressions:
@@ -30,13 +30,13 @@ spec:
                 matchLabels:
                   environment: staging
               values:
-                addonChartVersion: 3.13.0
+                addonChartVersion: 3.15.0
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 3.13.0
+                addonChartVersion: 3.15.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}

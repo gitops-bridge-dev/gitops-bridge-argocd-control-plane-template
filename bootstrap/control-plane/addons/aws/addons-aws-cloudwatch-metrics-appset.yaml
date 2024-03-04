@@ -14,7 +14,7 @@ spec:
               values:
                 addonChart: aws-cloudwatch-metrics
                 # anything not staging or prod use this version
-                addonChartVersion: 0.0.9
+                addonChartVersion: 0.0.10
                 addonChartRepository: https://aws.github.io/eks-charts
               selector:
                 matchExpressions:
@@ -29,13 +29,13 @@ spec:
                 matchLabels:
                   environment: staging
               values:
-                addonChartVersion: 0.0.9
+                addonChartVersion: 0.0.10
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.0.9
+                addonChartVersion: 0.0.10
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}

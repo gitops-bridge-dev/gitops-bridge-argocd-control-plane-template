@@ -14,7 +14,7 @@ spec:
               values:
                 addonChart: kyverno
                 # anything not staging or prod use this version
-                addonChartVersion: 3.0.5
+                addonChartVersion: 3.1.4
                 addonChartRepository: https://kyverno.github.io/kyverno
               selector:
                 matchExpressions:
@@ -29,13 +29,13 @@ spec:
                 matchLabels:
                   environment: staging
               values:
-                addonChartVersion: 3.0.5
+                addonChartVersion: 3.1.4
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 3.0.5
+                addonChartVersion: 3.1.4
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}

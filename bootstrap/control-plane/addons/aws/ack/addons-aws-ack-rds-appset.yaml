@@ -16,7 +16,7 @@ spec:
                 addonChartReleaseName: ack-rds
                 addonChartRepositoryNamespace: aws-controllers-k8s
                 # anything not staging or prod use this version
-                addonChartVersion: '1.1.7'
+                addonChartVersion: '1.2.1'
                 # using oci repostory already configure in argocd
                 # argocd repo add public.ecr.aws --type helm --name aws-public-ecr --enable-oci
                 addonChartRepository: public.ecr.aws
@@ -33,13 +33,13 @@ spec:
                 matchLabels:
                   environment: staging
               values:
-                addonChartVersion: '1.1.7'
+                addonChartVersion: '1.2.1'
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: '1.1.7'
+                addonChartVersion: '1.2.1'
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChartReleaseName}}
