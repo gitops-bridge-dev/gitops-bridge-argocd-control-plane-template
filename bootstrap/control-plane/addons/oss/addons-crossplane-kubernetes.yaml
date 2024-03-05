@@ -15,7 +15,7 @@ spec:
                 addonChart: crossplane-kubernetes
                 addonChartNamespace: crossplane-system
                 # anything not staging or prod use this version
-                addonChartVersion: 1.1.0
+                addonChartVersion: 1.2.0
                 addonChartRepository: https://gitops-bridge-dev.github.io/gitops-bridge-helm-charts
               selector:
                 matchExpressions:
@@ -30,13 +30,13 @@ spec:
                 matchLabels:
                   environment: staging
               values:
-                addonChartVersion: 1.1.0
+                addonChartVersion: 1.2.0
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 1.1.0
+                addonChartVersion: 1.2.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
@@ -60,7 +60,7 @@ spec:
               provider:
                 package:
                   registry: xpkg.upbound.io/crossplane-contrib/provider-kubernetes
-                  version: "v0.10.0"
+                  version: "v0.12.1"
           # fileParameters:
           #  - name:
           #    path:
