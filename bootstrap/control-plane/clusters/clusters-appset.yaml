@@ -15,7 +15,7 @@ spec:
     metadata:
       name: cluster-{{name}}
     spec:
-      project: default
+      project: addons
       source:
         repoURL: '{{metadata.annotations.addons_repo_url}}'
         targetRevision: '{{metadata.annotations.addons_repo_revision}}'

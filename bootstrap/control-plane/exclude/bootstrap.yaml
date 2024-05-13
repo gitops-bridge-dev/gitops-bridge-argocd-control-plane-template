@@ -18,7 +18,7 @@ spec:
     metadata:
       name: 'bootstrap-addons'
     spec:
-      project: default
+      project: addons
       source:
         repoURL: '{{metadata.annotations.addons_repo_url}}'
         path: '{{metadata.annotations.addons_repo_basepath}}{{metadata.annotations.addons_repo_path}}'

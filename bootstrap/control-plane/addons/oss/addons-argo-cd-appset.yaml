@@ -41,7 +41,7 @@ spec:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
     spec:
-      project: default
+      project: addons
       sources:
         - repoURL: '{{metadata.annotations.addons_repo_url}}'
           targetRevision: '{{metadata.annotations.addons_repo_revision}}'
@@ -56,6 +56,46 @@ spec:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/{{values.addonChart}}/values.yaml
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/{{metadata.labels.environment}}/addons/{{values.addonChart}}/values.yaml
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/clusters/{{name}}/addons/{{values.addonChart}}/values.yaml
+            valuesObject:
+              server:
+                ingress:
+                  enabled: true
+                  ingressClassName: alb
+                  hostname: "argocd.{{metadata.annotations.eks_cluster_domain}}"
+                  annotations:
+                    alb.ingress.kubernetes.io/backend-protocol: HTTPS
+                    alb.ingress.kubernetes.io/certificate-arn: "{{metadata.annotations.argocd_cert_arn}}"
+                    alb.ingress.kubernetes.io/healthcheck-path: /healthz
+                    alb.ingress.kubernetes.io/healthcheck-protocol: HTTPS
+                    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+                    alb.ingress.kubernetes.io/scheme: internal
+                    alb.ingress.kubernetes.io/ssl-redirect: "443"
+                    alb.ingress.kubernetes.io/tags: Name=argocd-alb
+                    alb.ingress.kubernetes.io/target-type: ip
+                    external-dns.alpha.kubernetes.io/hostname: "argocd.{{metadata.annotations.eks_cluster_domain}}"
+                    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+                    provi.repository: https://github.com/Provi-Engineering/provi-eks-blueprints
+                    provi.slack: talk-devops
+                    external-dns.alpha.kubernetes.io/ttl: "10"
+                    external-dns.alpha.kubernetes.io/aws-weight: "{{metadata.annotations.route53_weight}}"
+                    external-dns.alpha.kubernetes.io/set-identifier: "{{metadata.annotations.cluster_name}}"
+              configs:
+                secret:
+                  extra:
+                    dex.github.clientID: "{{metadata.annotations.argocd_github_client_id}}"
+                    dex.github.clientSecret: "{{metadata.annotations.argocd_github_client_secret}}"
+                cm:
+                  url: "https://argocd.{{metadata.annotations.eks_cluster_domain}}"
+                  dex.config: |
+                    connectors:
+                      - type: github
+                        id: github
+                        name: GitHub
+                        config:
+                          clientID: $dex.github.clientID
+                          clientSecret: $dex.github.clientSecret
+                          orgs:
+                          - name: Provi-Engineering
       destination:
         namespace: '{{values.addonChartRepositoryNamespace}}'
         name: '{{name}}'
