@@ -64,6 +64,44 @@ configs:
       type: helm
       url: public.ecr.aws
       enableOCI: 'true'
+    provi-helm-charts:
+      url: https://provi-helm-charts.pvfog.org
+      name: provi-helm-charts
+      type: helm
+    keda-core:
+      url: https://kedacore.github.io/charts
+      name: kedacore
+      type: helm
+    sumologic:
+      url: https://sumologic.github.io/sumologic-kubernetes-collection
+      name: sumologic
+      type: helm
+    datadog:
+      url: https://helm.datadoghq.com
+      name: datadog
+      type: helm
+
+  rbac:
+    policy.default: "role:dev"
+    policy.csv: |
+      p, role:dev, applications, get, default/*, allow
+      p, role:dev, applications, create, default/*, allow
+      p, role:dev, applications, update, default/*, allow
+      p, role:dev, applications, delete, default/*, allow
+      p, role:dev, applications, sync, default/*, allow
+      p, role:dev, applications, override, default/*, allow
+      p, role:dev, applications, action/*, default/*, allow
+      p, role:dev, exec, create, default/*, allow
+      p, role:dev, certificates, get, default/*, allow
+      p, role:dev, clusters, get, default/*, allow
+      p, role:dev, repositories, get, default/*, allow
+      p, role:dev, projects, get, default/*, allow
+      p, role:dev, accounts, get, default/*, allow
+      p, role:dev, gpgkeys, get, default/*, allow
+      p, role:dev, logs, get, default/*, allow
+
+      g, Provi-Engineering:DevOps, role:admin
+
   cm:
     application.resourceTrackingMethod: 'annotation' #use annotation for tracking required for Crossplane
     resource.exclusions: |
