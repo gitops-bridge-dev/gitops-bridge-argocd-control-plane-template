@@ -65,7 +65,7 @@ configs:
       url: public.ecr.aws
       enableOCI: 'true'
     provi-helm-charts:
-      url: https://provi-helm-charts.pvfog.org
+      url: https://provi-engineering.github.io/helm-charts
       name: provi-helm-charts
       type: helm
     keda-core:
