@@ -103,6 +103,7 @@ configs:
       g, Provi-Engineering:DevOps, role:admin
 
   cm:
+    accounts.ci: apiKey
     application.resourceTrackingMethod: 'annotation' #use annotation for tracking required for Crossplane
     resource.exclusions: |
       - kinds:
