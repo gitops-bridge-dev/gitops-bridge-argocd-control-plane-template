@@ -1,1 +1,4 @@
 # Helm chart values
+cloudWatchLogs:
+  logRetentionDays: 7
+  autoRetryRequests: true

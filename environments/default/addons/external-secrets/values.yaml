@@ -1,1 +1,11 @@
 # Helm chart values
+nodeSelector:
+  "node.rvaenergy.com/nodegroup": "utility"
+
+webhook:
+  nodeSelector:
+    "node.rvaenergy.com/nodegroup": "utility"
+
+certController:
+  nodeSelector:
+    "node.rvaenergy.com/nodegroup": "utility"
